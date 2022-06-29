@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>横竖添加年度指标</title>
+		<link rel="stylesheet" href="https://www.layuicdn.com/layui-v2.6.8/css/layui.css">
+		<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+	</head>
+	<style>
+		.layui-form {
+			display: flex;
+		}
+
+		.layui-form .layui-input {
+			width: 200px;
+		}
+		table .input-group-addon {
+			border: 0;
+		}
+	</style>
+	<body>
+		<div class="layui-form">
+			<select name="rows" lay-verify="">
+				<option value="">请选择指标</option>
+				<option value="研发投入" data-affix="万元" data-id="bfa81f46ffffffffb30ee76700000027">研发投入</option>
+				<option value="设备投入" data-affix="万元" data-id="bfa81f46ffffffffb30ee76700000028">设备投入</option>
+				<option value="税收" data-affix="万元" data-id="bfa81f46ffffffffb30ee76700000029">税收</option>
+				<option value="投资额" data-affix="万元" data-id="bfa81f46ffffffffb30ee76700000030">投资额</option>
+				<option value="营业收入" data-affix="万元" data-id="bfa81f46ffffffffb30ee76700000031">营业收入</option>
+				<option value="缴纳社保人数" data-affix="人数" data-id="bfa81f46ffffffffb30ee76700000032">缴纳社保人数
+				</option>
+			</select>
+			<button id="add_row" class="layui-btn">添加指标</button>
+			<input type="number" name="year" placeholder="请输入年度" class="layui-input">
+			<button id="add_col" class="layui-btn">添加年度</button>
+		</div>
+		<table class="layui-table" id="qr_table">
+			<thead>
+				<tr>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+
+		</table>
+		<button id="updateVals" class="layui-btn">更新值</button>
+
+
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+		<script src="https://www.layuicdn.com/layui/layui.js"></script>
+		<script>
+			let rowNames = []; // 表格指标名
+			let colNames = ['', 2019, 2020]; // 除了第一个 别的是年度
+			let rowAffixs = []; // 后缀单位
+			let rowIds = []; // id
+
+			let tempVals = [],
+				inputVals = [];
+
+			initTable();
+
+			function initTable() {
+				$('thead tr').html('')
+				$('tbody').html('')
+				// 第一行 表头
+				for (let i in colNames) {
+					$('thead tr').append('<th>' + colNames[i] + '</th>')
+				}
+				if(rowNames.length===0) {
+					$('tbody').append('<tr class="nodata"><td colspan="'+colNames.length+'" style="text-align:center;">暂无数据</td></tr>')
+				}
+				// 其他行
+				for (let i in rowNames) {
+					$('tbody').append('<tr></tr>')
+					for (let j in colNames) {
+						if (j === '0') {
+							console.log(rowNames[i])
+							$('tbody tr:last-child').append('<td>' + rowNames[i] + '</td>')
+						} else {
+							// 每行填充数据
+							$('tbody tr:last-child').append('<td>' +
+								'<div class="input-group">' +
+								'<input type="number" class="layui-input" value="">' +
+								'<div class="input-group-addon">' + rowAffixs[i] + '</div>' +
+								'</div></td>')
+						}
+					}
+				}
+			}
+			// 添加一列
+			function addCol() {
+				$('thead tr').append('<th>' + colNames[colNames.length - 1] + '</th>')
+				for (let i = 0; i < rowNames.length; i++) {
+					$(`tbody tr:nth-child(${i+1})`).append('<td>' +
+						'<div class="input-group">' +
+						'<input type="number" class="layui-input" value="">' +
+						'<div class="input-group-addon">' + rowAffixs[i] + '</div>' +
+						'</div></td>')
+				}
+			}
+
+			// 添加一行，末尾+一行空白值
+			function addRow() {
+				$('.nodata').remove();
+				$('tbody').append('<tr></tr>');
+				for (let j = 0; j < colNames.length; j++) {
+					if (j === 0) {
+						$('tbody tr:last-child').append('<td>' + rowNames[rowNames.length - 1] + '</td>')
+					} else {
+						$('tbody tr:last-child').append('<td>' +
+							'<div class="input-group">' +
+							'<input type="number" class="layui-input" value="">' +
+							'<div class="input-group-addon">' + rowAffixs[rowAffixs.length - 1] + '</div>' +
+							'</div></td>')
+					}
+				}
+			}
+
+			// 获取值
+			function getVals() {
+				let temp = [],
+					vals = [];
+				$('table input').each(function() {
+					temp.push(Number($(this).val()))
+				})
+				let len = colNames.length - 1;
+				console.log(temp)
+				tempVals = group(temp, len);
+
+				for (let i = 0; i < tempVals.length; i++) {
+					let demo = [];
+					for (var j = 0; j < tempVals[i].length; j++) {
+						demo.push({
+							year: colNames[j + 1],
+							val: tempVals[i][j]
+						})
+					}
+					inputVals.push({
+						id: rowIds[i],
+						list: demo
+					})
+				}
+				console.log(inputVals)
+				// inputVals 进行接口对接
+			}
+
+			$('#add_col').on('click', function() {
+				// 添加年度
+				let temp = Number($('input[name="year"]').val())
+				if (!temp) {
+					// 提示输入内容
+				} else if (temp === 0 || temp < 1840) {
+					// 提示输入合适的年份
+				} else if (colNames.indexOf(temp) > -1) {
+					// 提示年份已存在
+				} else {
+					colNames.push(temp);
+					addCol()
+				}
+			})
+
+			$('#add_row').on('click', function() {
+				// 添加指标
+				let temp = $('select[name="rows"]').val();
+				if (!temp) {
+					// 提示输入内容
+				} else if (rowNames.indexOf(temp) > -1) {
+					// 提示指标已存在
+				} else {
+					rowNames.push(temp);
+					rowAffixs.push($('select[name="rows"]').find('option:selected').attr('data-affix'))
+					rowIds.push($('select[name="rows"]').find('option:selected').attr('data-id'))
+					addRow();
+				}
+
+			})
+			$('#updateVals').on('click', function() {
+				getVals();
+			})
+
+			// 长数组切分为二维数组
+			function group(array, subGroupLength) {
+				let index = 0;
+				let newArray = [];
+				while (index < array.length) {
+					newArray.push(array.slice(index, index += subGroupLength));
+				}
+				return newArray;
+			}
+		</script>
+	</body>
+</html>

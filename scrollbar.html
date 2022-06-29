@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>滚动条样式修改</title>
+		<style>
+			body {
+				/*三角箭头的颜色*/
+				scrollbar-arrow-color: rgba(255,255,255,0);
+				/*滚动条滑块按钮的颜色*/
+				scrollbar-face-color: #aaaaaa;
+				/*滚动条整体颜色*/
+				scrollbar-highlight-color: #FFFFFF;
+				/*滚动条阴影*/
+				scrollbar-shadow-color: #FFFFFF;
+				/*滚动条轨道颜色*/
+				scrollbar-track-color: #FFFFFF;
+				/*滚动条3d亮色阴影边框的外观颜色——左边和上边的阴影色*/
+				scrollbar-3dlight-color: #FFFFFF;
+				/*滚动条3d暗色阴影边框的外观颜色——右边和下边的阴影色*/
+				scrollbar-darkshadow-color: #FFFFFF;
+				/*滚动条基准颜色*/
+				scrollbar-base-color: #FFFFFF;
+			}
+			
+			div#test ul a {
+				color:grey;
+			}
+			#test ul a {
+				color:red
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		<div style="background-color: rosybrown;width: 200px;height: 100px;display: inline-block;">测试</div>
+		<div style="background-color: #e3e3e3;width: 200px;height: 100px;display: inline-block;">测试</div>
+		<div style="background-color: bisque;width: 200px;height: 100px;display: inline-block;">测试</div>
+		<div style="height: 1200px;"></div>
+		<div id="test">
+			<ul class="ul">
+				<li>
+					<span>
+						<a>测试</a>
+					</span>
+				</li>
+			</ul>
+		</div>
+	</body>
+</html>

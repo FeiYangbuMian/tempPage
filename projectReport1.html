@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>项目报告</title>
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/layui/2.6.5/css/layui.css">
+		<style>
+			table {
+				width: 100%;
+			}
+
+			/* 通用 （删除0510）*/
+			p {
+				margin: 0
+			}
+
+			/* ------------------------------------头部与标题（新增0510）------------------------------------------ */
+			.r-header {
+				background-color: #F2F7FF;
+				height: 220px;
+				background-image: url(./img/r-banner.png);
+				background-repeat: no-repeat;
+				bakcground-size: 100% 100%;
+			}
+
+			.r-header h1 {
+				margin: 0;
+				padding: 70px 0 0 70px;
+				font-size: 30px;
+				color: #fff;
+				position: relative;
+			}
+
+			.r-header h1::after {
+				content: "";
+				position: absolute;
+				bottom: -20px;
+				left: 70px;
+				width: 550px;
+				height: 3px;
+				border-radius: 2px;
+				background: #fffb;
+			}
+
+			h2 {
+				padding: 10px 0;
+				margin: 0;
+				font-size: 24px;
+				font-weight: 600;
+				color: #333;
+				text-align: center;
+			}
+			h2 span {
+				vertical-align: top;
+				line-height: 40px;
+			}
+			h2 .h2-left {
+				height: 40px;
+				width: 120px;
+				background: url(./img/r-title-bg.png) no-repeat;
+				background-position: right 20px center;
+				display: inline-block;
+			}
+
+			h2 .h2-right {
+				height: 40px;
+				width: 120px;
+				background: url(./img/r-title-bg.png) no-repeat;
+				background-position: left 10px center;
+				transform: rotate(180deg);
+				display: inline-block;
+			}
+
+			h3 {
+				padding: 10px 30px;
+				margin: 0 0 20px 0;
+				font-size: 20px;
+				font-weight: 600;
+				color: #4B92FF;
+				position: relative;
+				border-bottom: 2px solid #A5C8FF;
+				background: url(./img/r-title.png) no-repeat;
+				background-position: 0 center;
+			}
+
+
+			/* ------------------------------------节点信息（有修改0510） ----------------------------------------- */
+
+			.nodes {
+				display: -webkit-box;
+				display: flex;
+				-webkit-box-pack: center;
+				justify-content: center;
+			}
+
+			.node {
+				display: -webkit-box;
+				display: flex;
+				-webkit-box-orient: vertical;
+				flex-direction: column;
+				border: 1px solid #007BE6;
+				background: #FAFCFF;
+				margin: 25px;
+				border-radius: 6px;
+				background: #fff;
+			}
+
+			.node.node-blue {
+				border: 1px solid #007BE6;
+			}
+
+			.node.node-green {
+				border: 1px solid #13C54F;
+			}
+
+			.node-title {
+				font-size: 16px;
+				padding: 12px;
+				line-height: 16px;
+				color: #fff;
+				background: #007BE6;
+				text-align: center;
+				letter-spacing: 4px;
+			}
+
+			.node.node-blue .node-title {
+				background: #007BE6;
+			}
+
+			.node.node-blue .node-content li {
+				background: #F2F7FF;
+			}
+
+			.node.node-green .node-title {
+				background: #13C54F;
+			}
+
+			.node.node-green .node-content li {
+				background: #F0FBF0;
+			}
+
+			.node-content {
+				margin: 0px;
+				padding: 20px;
+			}
+
+			.node-content li {
+				font-size: 16px;
+				color: #666;
+				display: -webkit-box;
+				display: flex;
+				line-height: 40px;
+				width: 285px;
+			}
+
+			.node-content-label {
+				color: #666;
+				width: 100px;
+				text-align: center;
+				border: 1px solid #fff;
+			}
+
+			.node-content-value {
+				color: #333;
+				-webkit-box-flex: 1;
+				flex: 1;
+				border: 1px solid #fff;
+				padding-left: 10px;
+			}
+
+			.node-content-value_blue {
+				color: #007BE6;
+			}
+
+			.node-content-value_green {
+				color: #1BBC50;
+			}
+
+			/* ------------------------------------项目倒排计划表（有修改0510） ----------------------------------------- */
+			.plans {
+				line-height: 50px;
+			}
+
+			.plan {
+				display: -webkit-box;
+				display: flex;
+			}
+
+			.plan-left {
+				width: 200px;
+				font-size: 16px;
+				color: #007BE6;
+				text-align: right;
+
+				padding: 0 30px 0 0;
+				position: relative;
+			}
+
+			.plan-left::after {
+				position: absolute;
+				content: '';
+				top: 36px;
+				right: 0;
+				border: 1px dashed #A5C8FF;
+				height: calc(100% - 20px);
+			}
+
+			.plans .plan:nth-last-child(1) .plan-left::after {
+				border: none
+			}
+
+			.plans .plan:nth-last-child(2) .plan-left::after {
+				border: none
+			}
+
+			.plan-left .layui-icon {
+				position: absolute;
+				top: 16px;
+				right: -9px;
+				font-size: 20px;
+				line-height: 1;
+			}
+
+			.plan-right {
+				-webkit-box-flex: 1;
+				flex: 1;
+				border-left: 4px solid #007BE6;
+				background: #FAFBFF;
+				padding: 0 0 0 20px;
+				margin: 5px 0 5px 30px;
+				color: #333;
+			}
+
+			.plan-item {
+				height: 50px;
+				border-bottom: 1px dashed #DAE8FF;
+			}
+
+			.plan-right .plan-item:last-child {
+				border-bottom: none;
+			}
+
+			.plan-item span {
+				float: right;
+				padding-right: 100px;
+				color: #999;
+			}
+
+			.plan-item span strong {
+				color: #333;
+				font-weight: normal;
+			}
+
+			.scross-plan .plan-item {
+				border-bottom: 1px dashed #FFE4A3;
+			}
+
+			.scross-plan .plan-left {
+				color: #FFB300;
+			}
+
+			.scross-plan .plan-right {
+				border-left: 4px solid #FFB300;
+				background: #FFFBF1;
+			}
+
+			/* ------------------------------------进展困难（修改0510） ------------------------------------ */
+			.feedback-table.table th {
+				border: 0;
+				background: #4B92FF;
+				color: #fff;
+				font-weight: normal;
+				text-align: center;
+			}
+
+			.feedback-table.table td {
+				text-align: center;
+				color: #333;
+				vertical-align: middle;
+			}
+
+			.feedback-table.table-hover>tbody>tr:hover {
+				background-color: #F3F8FF;
+			}
+
+			.table-bordered>tbody>tr>td,
+			.table-bordered>tbody>tr>th,
+			.table-bordered>tfoot>tr>td,
+			.table-bordered>tfoot>tr>th,
+			.table-bordered>thead>tr>td,
+			.table-bordered>thead>tr>th {
+				border: 1px solid #DAE8FF;
+			}
+
+			.feedback-table .nodata td {
+				color: #999;
+			}
+
+			/* ------------------------------------流程图（有修改0510） ----------------------------------------- */
+			.flow-contain {
+				margin: 0 auto;
+			}
+
+			.flow-contain .layui-icon-tips {
+				margin-left: 10px;
+				color: orange;
+				cursor: pointer;
+			}
+
+			.flow-items-contain {
+				display: -webkit-box;
+				display: flex;
+				
+				/* align-content: stretch; */
+			}
+
+			.flow-items-contain .flow-items-title {
+				width: 60px;
+				margin: 56px 10px 0 0;
+				background: #F2F7FF;
+				border: 1px solid #4B92FF;
+				border-radius: 6px;
+				line-height: 60px;
+				writing-mode: vertical-rl;
+				letter-spacing: 4px;
+				text-align: center;
+			}
+
+			.flow-items {
+				-webkit-box-flex: 1;
+				flex: 1;
+				display: -webkit-box;
+				display: flex;
+				/* flex-wrap: nowrap; */
+				padding: 0;
+			}
+
+			.flow-col {
+				width: 25%;
+				padding-right: 10px;
+			}
+
+			.flow-subtitle {
+				border-radius: 6px;
+				color: #FFFFFF;
+				position: relative;
+			}
+
+			.flow-subtitle h5 {
+				image-rendering: 0;
+				font-size: 16px;
+				text-align: center;
+				line-height: 36px;
+				font-weight: bold;
+				background: #4B92FF;
+				border-radius: 6px;
+			}
+
+			.flow-subtitle i {
+				position: absolute;
+				top: 0;
+				width: 30px;
+				right: -40px;
+				font-size: 30px;
+				line-height: 40px;
+				color: #007BE6;
+			}
+
+
+
+			.flow-items .flow-col:last-child .flow-subtitle i {
+				display: none;
+			}
+
+			.flow-items ul {
+				margin: 0;
+				padding: 10px 0 0;
+			}
+
+			.flow-items li {
+				position: relative;
+			}
+
+			.flow-item {
+				color: #333;
+				margin: 0 0 10px;
+				padding: 10px;
+				line-height: 1.5;
+				height: 80px;
+				border-radius: 6px;
+				border: 1px solid #CEE1FF;
+			}
+
+			.flow-item h6 {
+				font-size: 14px;
+				color: #333;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				line-height: 2;
+			}
+
+			.flow-item p {
+				font-size: 14px;
+				color: #666666;
+				line-height: 2;
+			}
+			
+			.flow-item.finished {
+				background: #F2F7FF;
+				border: 1px solid #4B92FF;
+			}
+			
+			.across-item.finished {
+				background: #FFF8E8;
+				border: 1px dashed #FFB300;
+			}
+
+			/**********  并行阶段  *************/
+			.across-items-contain {
+				display: -webkit-box;
+				display: flex;
+				/* align-content: stretch; */
+				padding-top: 10px;
+			}
+
+			.across-items-contain .across-items-title {
+				width: 60px;
+				margin: 0 10px 0 0;
+				background: #FFF8E8;
+				border: 1px solid #FFB300;
+				border-radius: 6px;
+				line-height: 60px;
+				writing-mode: vertical-rl;
+				letter-spacing: 4px;
+				text-align: center;
+			}
+
+			.across-items {
+				-webkit-box-flex: 1;
+				flex:1;
+			}
+
+			.across-col li {
+				display: -webkit-box;
+				display: flex;
+				-webkit-box-orient: horizontal;
+				flex-direction: row;
+			}
+
+			.across-item {
+				margin: 0 10px 10px 0;
+				padding: 15px 10px;
+				border-radius: 6px;
+				border: 1px dashed #FDD77F;
+			}
+
+			.across-col li .across-item:last-child {
+				margin-right: 0;
+			}
+
+			.across-item h4 {
+				color: #333;
+				font-size: 16px;
+				padding-bottom: 10px;
+				font-weight: bold;
+			}
+
+			.across-item p {
+				color: #666;
+				font-size: 14px;
+			}
+
+			/* 项目悬停提示内容 */
+			#projectinfo {
+				width: 550px;
+				padding: 20px;
+				background: #FFFFFF;
+				border: 2px solid #007BE6;
+				border-radius: 6px;
+				position: fixed;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+
+			#projectinfo::after {
+				content: '';
+				position: absolute;
+				width: 0;
+				height: 0;
+				top: -20px;
+				left: 200px;
+				border-left: 10px solid transparent;
+				border-right: 10px solid transparent;
+				border-top: 10px solid transparent;
+				border-bottom: 10px solid #007BE6;
+			}
+
+			/* 跨行的占位计算结果 按百分比来  */
+			.ml1 {
+				margin-left: 25%;
+			}
+
+			.ml2 {
+				margin-left: 50%;
+			}
+
+			.ml3 {
+				margin-left: 75%;
+			}
+
+			.w1 {
+				width: calc(25% - 10px);
+			}
+
+			.w2 {
+				width: calc(50% - 10px);
+			}
+
+			.w3 {
+				width: calc(75% - 10px);
+			}
+
+			.w4 {
+				width: calc(100% - 10px);
+			}
+
+			/* 徽章 已完成蓝色#007BE6 未完成灰色#A4A4A4 进行中绿色#1BBC50 逾期已完成橙色#F56938 逾期未完成红色#DF3535 */
+			.bg-blue {
+				background: #007BE6;
+			}
+
+			.bg-grey {
+				background: #A4A4A4;
+			}
+
+			.bg-green {
+				background: #1BBC50;
+			}
+
+			.bg-orange {
+				background: #F56938;
+			}
+
+			.bg-red {
+				background: #DF3535;
+			}
+
+			.txt-blue {
+				color: #007BE6;
+			}
+
+			.txt-green {
+				color: #1BBC50;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="r-header">
+			<button class="layui-btn layui-btn-normal">项目报告导出</button>
+			<button class="layui-btn layui-btn-primary">返回</button>
+			<h1>苏州高新绿色低碳科技产业发展有限公司年组装智慧新能源设备组建4万个项目</h1>
+		</header>
+		<h2>
+			<div class="h2-left"></div><span>项目进展信息</span>
+			<div class="h2-right"></div>
+		</h2>
+		<h3>关联土地资源项目节点信息</h3>
+		<div class="nodes">
+			<div class="node node-blue">
+				<div class="node-title">签署合同</div>
+				<ul class="node-content">
+					<li>
+						<div class="node-content-label">
+							受理状态：
+						</div>
+						<div class="node-content-value node-content-value_blue">
+							已完成
+						</div>
+					</li>
+					<li>
+						<div class="node-content-label">
+							受理时间：
+						</div>
+						<div class="node-content-value">
+							2022-09-18 13:22:11
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="node node-green">
+				<div class="node-title">用地证</div>
+				<ul class="node-content">
+					<li>
+						<div class="node-content-label ">
+							受理状态：
+						</div>
+						<div class="node-content-value node-content-value_green">
+							已完成
+						</div>
+					</li>
+					<li>
+						<div class="node-content-label">
+							受理时间：
+						</div>
+						<div class="node-content-value">
+							2022-09-18 13:22:11
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<h3>项目倒排计划表</h3>
+		<ul class="plans">
+			<li class="plan">
+				<div class="plan-left">
+					立项用地规划许可<i class="layui-icon layui-icon-radio"></i>
+				</div>
+				<ul class="plan-right">
+					<li class="plan-item">
+						<p>企业投资项目备案-带方案出让类项目
+							<span>计划结束时间：<strong>2022-02-17</strong></span>
+						</p>
+					</li>
+				</ul>
+			</li>
+			<li class="plan">
+				<div class="plan-left">
+					工程建设许可<i class="layui-icon layui-icon-radio"></i>
+				</div>
+				<ul class="plan-right">
+					<li class="plan-item">
+						<p>企业投资项目备案-带方案出让类项目
+							<span>计划结束时间：<strong>2022-02-17</strong></span>
+						</p>
+					</li>
+					<li class="plan-item">
+						<p>企业投资项目备案-带方案出让类项目
+							<span>计划结束时间：<strong>2022-02-17</strong></span>
+						</p>
+					</li>
+				</ul>
+			</li>
+			<li class="plan">
+				<div class="plan-left">
+					工程建设许可<i class="layui-icon layui-icon-radio"></i>
+				</div>
+				<ul class="plan-right">
+					<li class="plan-item">
+						<p>企业投资项目备案-带方案出让类项目
+							<span>计划结束时间：<strong>2022-02-17</strong></span>
+						</p>
+					</li>
+					<li class="plan-item">
+						<p>企业投资项目备案-带方案出让类项目
+							<span>计划结束时间：<strong>2022-02-17</strong></span>
+						</p>
+					</li>
+				</ul>
+			</li>
+			<li class="plan scross-plan">
+				<div class="plan-left">
+					并行阶段<i class="layui-icon layui-icon-radio"></i>
+				</div>
+				<ul class="plan-right">
+					<li class="plan-item">
+						<p>企业投资项目备案-带方案出让类项目
+							<span>计划结束时间：<strong>2022-02-17</strong></span>
+						</p>
+					</li>
+					<li class="plan-item">
+						<p>企业投资项目备案-带方案出让类项目
+							<span>计划结束时间：<strong>2022-02-17</strong></span>
+						</p>
+					</li>
+				</ul>
+			</li>
+		</ul>
+
+		<h3>项目问题反馈</h3>
+		<table class="feedback-table table table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>问题描述</th>
+					<th>责任部门</th>
+					<th>反馈时间</th>
+					<th>回复内容</th>
+					<th>回复时间</th>
+				</tr>
+			</thead>
+			<!-- 有数据 -->
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td>资规无审批数据</td>
+					<td>资规局</td>
+					<td>2022-2-22 12:34:34</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td rowspan="2">立项用地规划许可</td>
+					<td>资规无审批数据</td>
+					<td>资规局</td>
+					<td>2022-2-22 12:34:34</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>资规无审批数据</td>
+					<td>资规局</td>
+					<td>2022-2-22 12:34:34</td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+			<!-- 暂无数据 -->
+			<tbody class="nodata">
+				<tr>
+					<td colspan="6">暂无问题反馈</td>
+				</tr>
+			</tbody>
+		</table>
+
+
+		<div>
+			<div class="flow-contain" id="vm">
+				<h3>项目全流程审批导览图<i class="layui-icon layui-icon-tips showtip"></i></h3>
+				<!-- 不跨行 -->
+				<div class="flow-items-contain">
+					<div class="flow-items-title">
+						<p>主</p>
+						<p>阶</p>
+						<p>段</p>
+					</div>
+					<div class="flow-items">
+						<div v-for="(item,index) in stages" class="flow-col">
+							<div class="flow-subtitle">
+								<h5>{{item.name}}</h5>
+							</div>
+							<ul>
+								<li v-for="(it) in list[index]" class="flow-item">
+									<h6>{{it.name}} - {{it.type}}</h6>
+									<p><span class="layui-badge" :data-state="it.state"></span>
+										{{it.time}}（计划上报：{{it.plan}}）
+									</p>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- 跨行 -->
+				<div class="across-items-contain">
+					<div class="across-items-title">跨行阶段</div>
+					<div class="across-items">
+						<ul class="across-col">
+							<li v-for="(item,index) in blocks">
+								<div v-for="(block,index) in item" class="across-item" :data-begin="block.begin"
+									:data-end="block.end">
+									<h6>{{block.name}} - {{block.type}}</h6>
+									<p><span class="layui-badge" :data-state="block.state"></span>
+										{{block.time}}（计划上报：{{block.plan}}）
+									</p>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- 项目悬停提示内容 -->
+				<div id="projectinfo">
+					<table>
+						<tr>
+							<td>事项名称</td>
+							<td>建设用地规划许可证的核发（含建设用地批准书）<span class="layui-badge" data-state="3"></span></td>
+						</tr>
+						<tr>
+							<td>事项名称</td>
+							<td>建设用地规划许可证的核发（含建设用地批准书）</td>
+						</tr>
+						<tr>
+							<td>事项名称</td>
+							<td>建设用地规划许可证的核发（含建设用地批准书）</td>
+						</tr>
+						<tr>
+							<td>事项名称</td>
+							<td>建设用地规划许可证的核发（含建设用地批准书）</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!--  vue仅仅为了模拟jsp的一些功能（遍历），是示例，不可直接套用  -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.min.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+		<script src="http://layui.itmtr.cn/layui/release/layer/dist/layer.js?v=351-1"></script>
+		<script>
+			/* start----  是vue */
+			const vm = new Vue({
+				el:'#vm',
+				data() {
+					return {
+						// 测试数据，格式如下
+						// 阶段
+						stages: [{
+							name: '立项用地规划许可',
+						}, {
+							name: '工程建设许可',
+						}, {
+							name: '施工许可',
+						}, {
+							name: '竣工验收',
+						}, ],
+						// 阶段事项
+						list: [
+							[{
+								name: '啥啥啥啥备案1',
+								type: '带方案出让类项目',
+								state: '1',
+								time: '2022-02-22',
+								plan: '2021-08-25',
+							}, {
+								name: '啥啥啥啥备案1',
+								type: '',
+								state: '2',
+								time: '2022-02-22',
+								plan: '2021-08-25',
+							}],
+							[{
+								name: '建设项目用地预审与选址意见书',
+								type: '带方案出让类项目',
+								state: '3',
+								plan: '2021-08-25',
+								time: '2022-02-22',
+							}],
+							[{
+								name: '啥啥啥啥备案3',
+								type: '带方案出让类项目',
+								state: '4',
+								plan: '2021-08-25',
+								time: '2022-02-22'
+							}],
+							[{
+								name: '啥啥啥啥备案4',
+								type: '带方案出让类项目',
+								state: '5',
+								plan: '2021-08-25',
+								time: '2022-02-22'
+							}, {
+								name: '啥啥啥啥备案4',
+								type: '带方案出让类项目一般社会投资项目',
+								plan: '2021-08-25',
+								time: '2022-02-22'
+							}, {
+								name: '啥啥啥啥备案4',
+								type: '带方案出让类项目',
+								plan: '2021-08-25',
+								time: '2022-02-22'
+							}],
+						],
+						// 跨行阶段事项
+						blocks: [ // 多行数据，每行数据是一个数组
+							// 一个数组一行数据，里面是每个跨几列object数据
+							[{
+								name: '啥啥啥啥备案1',
+								type: '带方案出让类项目',
+								time: '2022-02-22',
+								plan: '2021-08-25',
+								state: '3',
+								begin: 1,
+								end: 3
+							}, ],
+							[{
+									name: '啥啥啥啥备案1',
+									type: '带方案出让类项目',
+									time: '2022-02-22',
+									plan: '2021-08-25',
+									state: '5',
+									begin: 1,
+									end: 1
+								},
+								{
+									name: '啥啥啥啥备案5',
+									name: '啥啥啥啥备案1',
+									type: '带方案出让类项目',
+									time: '2022-02-22',
+									plan: '2021-08-25',
+									state: '1',
+									begin: 3,
+									end: 4
+								},
+							],
+							[{
+									name: '啥啥啥啥备案1',
+									type: '带方案出让类项目',
+									time: '2022-02-22',
+									plan: '2021-08-25',
+									begin: 3,
+									end: 3
+								},
+								{
+									name: '啥啥啥啥备案1',
+									type: '带方案出让类项目',
+									time: '2022-02-22',
+									plan: '2021-08-25',
+									begin: 4,
+									end: 4
+								},
+							],
+						]
+					}
+				},
+			})
+			// Vue.createApp(vm).mount('#vm');
+			/* 是vue   ---end */
+
+			// 点击标题图标打开提示框（有修改0510
+			$('.flow-contain').on('click', '.showtip', function() {
+				layer.open({
+					title: '小贴士',
+					area: '680px',
+					content: '内容内容内容'
+				});
+			});
+
+			// 鼠标移进，展示事项信息
+			$('.flow-items').on('mouseenter', '.flow-item', function() {
+				let that = this;
+				console.log($(this).offset())
+				let tempTop = $(this).offset().top + 90;
+				let tempLeft = $(this).offset().left;
+				// 如果鼠标悬停的元素太靠右，left就设为总宽度-提示框宽度（其实就是right为提示框宽度）
+				if ($('.flow-contain').width() - tempLeft < 400) tempLeft = $('.flow-contain').width() - $(
+					'#projectinfo').width();
+				$('#projectinfo').css({
+					top: tempTop + "px",
+					left: tempLeft + 'px'
+				});
+				$('#projectinfo').show();
+			});
+			// 鼠标移走，隐藏事项信息
+			$('.flow-items').on('mouseleave', '.flow-item', function() {
+				let that = this;
+				$('#projectinfo').hide()
+
+			});
+
+			// 徽章背景色与文本修改
+			$('.layui-badge').each(function() {
+				let state = $(this).attr('data-state');
+				let className = '',
+					txt = '';
+				/* 已完成蓝色#007BE6 未完成灰色#A4A4A4 进行中绿色#1BBC50 逾期已完成橙色#F56938 逾期未完成红色#DF3535 */
+				// case值匹配后，设置class和文本内容，默认值default
+				switch (state) {
+					case '1':
+					case '3':
+						className = 'bg-blue';
+						$(this).parents('.flow-item').addClass('finished');
+						$(this).parents('.across-item').addClass('finished');
+						txt = "已完成";
+						break;
+					case '2':
+						className = 'bg-grey';
+						txt = "未完成";
+						break;
+					case '4':
+						className = 'bg-red';
+						txt = "逾期未完成";
+						break;
+					case '5':
+						className = 'bg-green';
+						txt = "进行中";
+						break;
+					default:
+						className = 'bg-grey';
+						txt = "未完成";
+						break;
+				}
+				$(this).addClass(className);
+				$(this).text(txt);
+			});
+
+			// 跨行的宽度、左边距计算 
+			$('.across-col li').each(function() {
+				let len = $(this).find('.across-item').length;
+				for (var i = 1; i <= len; i++) {
+					// 宽度 
+					let curBegin = $(this).find('.across-item:nth-child(' + i + ')').attr('data-begin');
+					let curEnd = $(this).find('.across-item:nth-child(' + i + ')').attr('data-end');
+					$(this).children('.across-item:nth-child(' + i + ')').addClass('w' + (curEnd -
+						curBegin + 1));
+					//左边距 i=1时[i].begin-1个ml  别的 [i].begin-[i-1].end-1个ml
+					if (i === 1) {
+						let first = Number($(this).find('.across-item:first').attr('data-begin'));
+						if (first > 1) $(this).find('.across-item:first').addClass('ml' + (first - 1));
+					} else {
+						let cur = $(this).find('.across-item:nth-child(' + i + ')').attr('data-begin');
+						let prev = $(this).find('.across-item:nth-child(' + (i - 1) + ')').attr('data-end');
+						if (cur - prev > 1) $(this).children('.across-item:nth-child(' + i + ')').addClass('ml' + (cur -
+							prev - 1));
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

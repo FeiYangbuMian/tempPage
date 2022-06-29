@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+
+
+		<script>
+			let data = [{
+					"declareInfoId": null,
+					"mealDeclareInfoId": null,
+					"fleId": "626905d581341b419cd323c6",
+					"isUnionForm": true,
+					"fleName": "开办货物运输企业联办申请表.docx"
+				},
+				{
+					"declareInfoId": "ac106792000000006a208f6b00000015",
+					"mealDeclareInfoId": null,
+					"fleId": "626905d581341b419cd323c7",
+					"isUnionForm": false,
+					"fleName": "户外广告设施设置的审批.docx"
+				},
+				{
+					"declareInfoId": "ac106792000000006a20903600000022",
+					"mealDeclareInfoId": null,
+					"fleId": "626905d581341b419cd323c8",
+					"isUnionForm": false,
+					"fleName": "《道路货物运输经营申请表》.docx"
+				}
+			];
+			data.forEach((item) => {
+			        window.open('http://180.117.162.14:8092/api/flagship/attachment/download?fileId=' + item.fleId);
+			      });
+		</script>
+	</body>
+</html>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+		<link rel="stylesheet" href="//unpkg.com/layui@2.6.5/dist/css/layui.css">
+		<title>项目全流程审批导览图</title>
+	</head>
+	<style>
+		p {
+			margin: 0
+		}
+
+		.flow-contain {
+			margin: 0 auto;
+			padding: 70px 0 0 0;
+			width: 1200px;
+		}
+
+		.flow-title {
+			width: 1200px;
+			height: 110px;
+			background: #3471F7;
+			border-radius: 10px;
+			text-align: center;
+			padding: 10px 0;
+		}
+
+		.flow-title h1 {
+			font-size: 36px;
+			font-family: PingFangSC-Semibold, PingFang SC;
+			font-weight: bold;
+			color: #FFFFFF;
+			line-height: 1.5;
+		}
+
+		.flow-title p {
+			font-size: 18px;
+			color: #FFFFFF;
+			line-height: 1.5;
+		}
+
+		.flow-items {
+			display: flex;
+			flex-wrap: nowrap;
+			justify-content: flex-start;
+			padding: 30px 0;
+		}
+
+		.flow-col {
+			margin-right: 53px;
+			width: 260px;
+		}
+
+		.flow-subtitle {
+			width: 260px;
+			height: 120px;
+			background: #3471F7;
+			border-radius: 10px;
+			color: #FFFFFF;
+			padding: 10px;
+			position: relative;
+		}
+
+		.flow-subtitle h2 {
+			font-size: 16px;
+			text-align: center;
+			padding: 5px 0 12px;
+			border-bottom: 2px dashed #FFFFFF66;
+			margin-bottom: 5px;
+		}
+
+		.flow-subtitle p {
+			white-space: nowrap;
+			font-size: 14px;
+			line-height: 2;
+		}
+
+		.flow-subtitle i {
+			position: absolute;
+			position: absolute;
+			top: 45px;
+			width: 30px;
+			left: 270px;
+			font-size: 30px;
+		}
+
+		.flow-items .flow-col:last-child .flow-subtitle i {
+			display: none;
+		}
+
+		.flow-items ul {
+			margin: 20px 10px;
+			padding-left: 10px;
+			border-left: 2px dashed #64AAFC;
+		}
+
+		.flow-items li {
+			position: relative;
+		}
+
+		.layui-icon {
+			position: absolute;
+			top: -3px;
+			left: -19px;
+			color: #64AAFC;
+		}
+
+		.flow-item {
+			background: #fff;
+			color: #333;
+			margin: 0 0 20px;
+			padding: 0 6px 10px;
+			line-height: 1.5;
+		}
+
+		.flow-item h4 {
+			font-size: 16px;
+			font-weight: 600;
+			line-height: 2;
+		}
+
+		.flow-item p {
+			font-size: 14px;
+			color: #666666;
+			line-height: 2;
+		}
+
+		/**********  并行阶段  *************/
+
+		.across-title {
+			width: 1200px;
+			height: 40px;
+			background: #3471F733;
+			border-radius: 10px;
+			text-align: center;
+			margin-bottom: 30px;
+		}
+
+		.across-title h1 {
+			font-size: 16px;
+			color: #333333bb;
+			line-height: 40px;
+			font-weight: bold;
+		}
+
+		.across-items {}
+
+		.across-col li {
+			display: flex;
+			flex-direction: row;
+		}
+
+		.across-item {
+			margin: 0 53px 30px 0;
+			padding: 15px 10px;
+			width: 260px;
+			border-radius: 10px;
+			border: 2px dashed #3471F7;
+		}
+		
+		.across-col li .across-item:last-child {
+			margin-right: 0;
+		}
+		.across-item h4 {
+			color: #333;
+			font-size: 16px;
+			padding-bottom: 10px;
+			font-weight: bold;
+		}
+
+		.across-item p {
+			color: #666;
+			font-size: 14px;
+		}
+
+		/* 跨行的占位计算结果 width 260*(end-begin+1)+53*(end-begin) margin-left 313*(begin-1)or313*([i].begin-[i-1].end-1) */
+		.ml1 {
+			margin-left: 313px;
+		}
+
+		.ml2 {
+			margin-left: 626px;
+		}
+
+		.ml3 {
+			margin-left: 939px;
+		}
+
+		.w1 {
+			width: 260px;
+		}
+
+		.w2 {
+			width: 573px;
+		}
+
+		.w3 {
+			width: 886px;
+		}
+
+		.w4 {
+			width: 1200px;
+		}
+	</style>
+	<body>
+		<div class="flow-contain" id="vm">
+			<div class="flow-title">
+				<h1>XXX项目开竣工全流程审批导览图</h1>
+				<p>政府投资房屋建筑及其他类项目（全流程审批控制时限：60个工作日）</p>
+			</div>
+			<!-- 不跨行 -->
+			<div class="flow-items">
+				<div v-for="(item,index) in stages" class="flow-col">
+					<div class="flow-subtitle">
+						<h2>{{item.name}}</h2>
+						<p>阶段牵头部门：自然资源和规划部门备份</p>
+						<p>阶段流程办理时限：19个工作日</p>
+						<i class="layui-icon layui-icon-next"></i>
+					</div>
+					<ul>
+						<li v-for="(it) in list[index]">
+							<i class="layui-icon layui-icon-radio"></i>
+							<div class="flow-item">
+								<h4>{{it.name}}</h4>
+								<p>办理部门：{{it.dep}}</p>
+								<p>承诺办结时限：{{it.time}}</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- 跨行 -->
+			<div class="across-title">
+				<h1>并行阶段</h1>
+			</div>
+			<div class="across-items">
+				<ul class="across-col">
+					<li v-for="(item,index) in blocks">
+						<div v-for="(block,index) in item" class="across-item" :data-begin="block.begin"
+							:data-end="block.end">
+							<h4></h4>
+							<!-- <p>{{block.content}}</p> -->
+							<!-- 上一行p标签改为下面，遍历.list，展示值 -->
+							<!-- <p v-for="it in block.list">{{it}}</p> -->
+							<p v-for="it in block.list">{{it.name}}，部门：{{it.dep}}</p>
+							<!--  -->
+							<!-- <div v-for="it in block.list">
+								<p>{{it.name}}</p>
+							</div> -->
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<script src="https://unpkg.com/vue@next"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+		<script>
+			const vm = {
+				data() {
+					return {
+						// 测试数据，格式如下
+						// 阶段
+						stages: [{
+							name: '立项用地规划许可阶段',
+						}, {
+							name: '工程建设许可阶段',
+						}, {
+							name: '施工许可阶段',
+						}, {
+							name: '竣工验收阶段',
+						}, ],
+						// 阶段事项
+						list: [
+							[{
+								name: '啥啥啥啥备案1',
+								content: '内容',
+								dep: '行政审批部门',
+								time: '5个工作日'
+							}, {
+								name: '啥啥啥啥备案1',
+								content: '内容一般社会投资项目（除带方案出让用地及小型社会投资项目）流程图一般社会投资项目（除带方案出让用地及小型社会投资项目）流程图',
+								dep: '行政审批部门',
+								time: '5个工作日',
+							}],
+							[{
+								name: '建设项目用地预审与选址意见书',
+								content: '内容',
+								dep: '行政审批部门',
+								time: '5个工作日'
+							}, {
+								name: '政府投资项目可行性研究报告审批（含工程建设项目招标事项核准）',
+								content: '内容',
+								dep: '行政审批部门',
+								time: '5个工作日'
+							}],
+							[{
+								name: '啥啥啥啥备案3',
+								content: '内容',
+								dep: '行政审批部门',
+								time: '5个工作日'
+							}],
+							[{
+								name: '啥啥啥啥备案4',
+								content: '内容',
+								dep: '行政审批部门',
+								time: '5个工作日'
+							}, {
+								name: '啥啥啥啥备案4',
+								content: '内容一般社会投资项目（除带方案出让用地及小型社会投资项目）流程图一般社会投资项目（除带方案出让用地及小型社会投资项目）流程图',
+								dep: '行政审批部门',
+								time: '5个工作日'
+							}, {
+								name: '啥啥啥啥备案4',
+								content: '内容',
+								dep: '行政审批部门',
+								time: '5个工作日'
+							}],
+						],
+						// 跨行阶段事项
+						blocks: [
+							// 多行数据，每行数据是一个数组，里面list是每个跨几列object数据
+							[{
+									name: '啥啥啥啥备案4',
+									list:[{
+										name:'1.内容一般社会投资项目',
+										dep:'xxxx部门'
+									},{
+										name:'2.内容一般社会投资项目',
+										dep:'xxxx部门'
+									}],
+									begin: 1,
+									end: 3
+								},],
+							[{
+									name: '啥啥啥啥备案5',
+									list:[{
+										name:'1.内容一般社会投资项目',
+										dep:'xxxx部门'
+									},{
+										name:'2.内容一般社会投资项目',
+										dep:'xxxx部门'
+									}],
+									content: '内容一般社会投资项目（除带方案出让用地及小型社会投资项目）流程图一般社会投资项目（除带方案出让用地及小型社会投资项目）流程图',
+									begin: 1,
+									end: 1
+								},
+								{
+									name: '啥啥啥啥备案5',
+									list:[{
+										name:'1.内容一般社会投资项目',
+										dep:'xxxx部门'
+									},{
+										name:'2.内容一般社会投资项目',
+										dep:'xxxx部门'
+									}],
+									content: '内容一般社会投资项目（除带方案出让用地及小型社会投资项目）流程图一般社会投资项目（除带方案出让用地及小型社会投资项目）流程图',
+									begin: 3,
+									end: 4
+								},
+							],
+							[{
+									name: '啥啥啥啥备案5',
+									list:[{
+										name:'1.内容一般社会投资项目',
+										dep:'xxxx部门'
+									},{
+										name:'2.内容一般社会投资项目',
+										dep:'xxxx部门'
+									}],
+									content: '内容一般社会投资项目（除带方案出让用地及小型社会投资项目）流程图一般社会投资项目（除带方案出让用地及小型社会投资项目）流程图',
+									begin: 3,
+									end: 3
+								},
+								{
+									name: '啥啥啥啥备案5',
+									list:[{
+										name:'1.内容一般社会投资项目',
+										dep:'xxxx部门'
+									},{
+										name:'2.内容一般社会投资项目',
+										dep:'xxxx部门'
+									}],
+									content: '内容一般社会投资项目（除带方案出让用地及小型社会投资项目）流程图一般社会投资项目（除带方案出让用地及小型社会投资项目）流程图',
+									begin: 4,
+									end: 4
+								},
+							],
+						]
+					}
+				},
+			}
+
+			Vue.createApp(vm).mount('#vm');
+
+			// 跨行的标题修改
+			$('.across-item').each(function() {
+				let begin = Number($(this).attr('data-begin'));
+				let end = Number($(this).attr('data-end'));
+				$(this).children('h4').text(numToChinese(begin, end) + '可并联或并行办理事项:')
+			});
+
+			// 跨行的宽度、左边距计算 
+			$('.across-col li').each(function() {
+				let len = $(this).find('.across-item').length;
+				for (var i = 1; i <= len; i++) {
+					// 宽度 
+					let curBegin = $(this).find('.across-item:nth-child(' + i + ')').attr('data-begin');
+					let curEnd = $(this).find('.across-item:nth-child(' + i + ')').attr('data-end');
+					$(this).children('.across-item:nth-child(' + i + ')').addClass('w' + (curEnd -
+						curBegin + 1));
+					//左边距 i=1时[i].begin-1个ml  别的 [i].begin-[i-1].end-1个ml
+					if (i === 1) {
+						let first = Number($(this).find('.across-item:first').attr('data-begin'));
+						if (first > 1) $(this).find('.across-item:first').addClass('ml' + (first - 1));
+					} else {
+						let cur = $(this).find('.across-item:nth-child(' + i + ')').attr('data-begin');
+						let prev = $(this).find('.across-item:nth-child(' + (i - 1) + ')').attr('data-end');
+						if (cur - prev > 1) $(this).children('.across-item:nth-child(' + i + ')').addClass('ml' + (cur -
+							prev - 1));
+					}
+				}
+			})
+
+
+			// 数字转汉字函数
+			function numToChinese(begin, end) {
+				let beginText = "",
+					endText = "",
+					result = "";
+				switch (begin) {
+					case 1:
+						beginText = "第一"
+						break;
+					case 2:
+						beginText = "第二"
+						break;
+					case 3:
+						beginText = "第三"
+						break;
+					case 4:
+						beginText = "第四"
+						break;
+					default:
+						break;
+				}
+				switch (end) {
+					case 1:
+						endText = "第一"
+						break;
+					case 2:
+						endText = "第二"
+						break;
+					case 3:
+						endText = "第三"
+						break;
+					case 4:
+						endText = "第四"
+						break;
+					default:
+						break;
+				}
+				let temp = ''
+				switch (end - begin) {
+					case 0:
+						result = beginText;
+						break;
+					case 1:
+						result = beginText + '、' + endText;
+						break;
+					case 2:
+					case 3:
+						result = beginText + '至' + endText;
+						break;
+					default:
+						break;
+				}
+				return result;
+			}
+		</script>
+	</body>
+</html>

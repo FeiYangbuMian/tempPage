@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>报表导出</title>
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+		<link href="http://layui.itmtr.cn/layui/dist/css/layui.css" rel="stylesheet">
+		<link href="https://layui.11dz.cn/layui/dist/css/modules/laydate/default/laydate.css?v=5.3.1" rel="stylesheet">
+		<script src="https://layui.11dz.cn/layui/dist/layui.js"></script>
+		<!-- <script src="./js/laydate.js"></script> -->
+		<!-- link script全不要 -->
+	</head>
+	<style>
+		body {
+			background-color: #F0F2F5;
+		}
+
+		.layui-form {
+			padding: 20px;
+			background: #fff;
+			width: 1200px;
+			margin: 0 auto;
+		}
+
+		.layui-form-item .layui-inline {
+			width: 33%;
+			margin: 0;
+			text-align: right;
+		}
+
+		.layui-form-item .layui-inline .layui-form-label {
+			box-sizing: content-box;
+			width: 85px;
+			margin: 0;
+			padding: 9px 15px 0 0;
+		}
+
+
+		.layui-form-item .layui-inline .layui-input-inline {
+			width: calc(100% - 100px);
+			margin-right: 0;
+		}
+
+		.layui-form .layui-btn {
+			width: 120px;
+			height: 40px;
+			background: #FF6E00;
+			border-radius: 2px;
+		}
+
+		.layui-form .layui-btn-primary {
+			background-color: #fff;
+			color: #FF6E00;
+			border-color: #FF6E00;
+
+		}
+
+		.layui-form-select dl dd {
+			text-align: left;
+		}
+
+		.layui-form-select dl dd.layui-this {
+			background-color: #FF6E00;
+		}
+
+		.layui-form-radio:hover *,
+		.layui-form-radioed,
+		.layui-form-radioed>i {
+			color: #FF6E00;
+		}
+
+		.laydate-theme-orange.layui-laydate .layui-this {
+			background-color: #FF6E00 !important;
+		}
+
+		.laydate-theme-orange .layui-laydate-content td.laydate-selected {
+			background-color: #FFF0E5;
+		}
+		.laydate-theme-orange .layui-laydate-footer span:hover {
+			color: #569CFF;
+		}
+
+		.t-container {
+			width: 1200px;
+			margin: 20px auto;
+			background: #fff;
+			padding: 30px;
+		}
+
+		.t-container h2 {
+			border-bottom: 2px solid #569CFF;
+			margin: 0 0 20px 0;
+		}
+
+		.t-container h2 span {
+			display: inline-block;
+			height: 50px;
+			line-height: 50px;
+			background: #569CFF;
+			color: #fff;
+			font-size: 20px;
+			padding: 0 38px;
+			position: relative;
+		}
+
+		.t-container h2 .layui-btn {
+			float: right;
+			width: 120px;
+			height: 40px;
+			border-radius: 2px;
+			background: #569CFF;
+		}
+
+		.t-container h2 span::after {
+			position: absolute;
+			content: '';
+			top: 0;
+			right: -40px;
+			border-left: 20px solid #569CFF;
+			border-right: 20px solid transparent;
+			border-top: 26px solid transparent;
+			border-bottom: 26px solid #569CFF;
+		}
+
+		.t-container .table th {
+			color: #569CFF;
+			text-align: center;
+			border: 0;
+			height: 40px;
+			vertical-align: middle;
+			background: #F5F7F9;
+		}
+
+		.t-container .table td {
+			color: #333;
+			text-align: center;
+			border: 0;
+			height: 60px;
+			vertical-align: middle;
+		}
+
+		.table tr:nth-of-type(even) {
+			background-color: #F5F7F9;
+		}
+
+		.text-left {
+			text-align: left !important;
+		}
+
+		.text-warn {
+			color: #E21B1B !important;
+		}
+	</style>
+	<body>
+		<form class="layui-form" action="">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">部门选择：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="projectname" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">板块选择:</label>
+					<div class="layui-input-inline">
+						<select name="projectblock">
+							<option value="">请选择</option>
+							<option value="1">layer</option>
+							<option value="2">form</option>
+							<option value="3">layim</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">年份选择：</label>
+					<div class="layui-input-inline">
+						<select name="projectlevel">
+							<option value="">请选择</option>
+							<option value="1">layer</option>
+							<option value="2">form</option>
+							<option value="3">layim</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline"> <label class="layui-form-label">时段选择</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" id="test10" placeholder="">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">快捷选择:</label>
+					<div class="layui-input-inline">
+						<!-- 自己改name -->
+						<input type="radio" name="sex" value="thisweek" title="近一周">
+						<input type="radio" name="sex" value="lastmonth" title="本月">
+						<input type="radio" name="sex" value="thismonth" title="上月">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<button type="submit" class="layui-btn" lay-submit="" lay-filter="form">查询</button>
+					<button type="reset" class="layui-btn layui-btn-primary" lay-filter="form">清除</button>
+				</div>
+			</div>
+
+		</form>
+		<div class="t-container">
+			<h2><span>政务服务流程优化程度-即办件事项汇总表</span><button class="layui-btn">导出</button></h2>
+			<table class="table table-hover">
+				<thead class="t-thead">
+					<tr>
+						<th>序号</th>
+						<th>部门</th>
+						<th>即办件数</th>
+						<th>总事项数</th>
+						<th>比率</th>
+					</tr>
+				</thead>
+				<tbody class="t-tbody">
+					<tr>
+						<td>1</td>
+						<td class="text-left">相城区国家保密局</td>
+						<td>1</td>
+						<td>1</td>
+						<td class="text-warn">1%</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td class="text-left">相城区国家保密局</td>
+						<td>1</td>
+						<td>1</td>
+						<td>1%</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td class="text-left">相城区国家保密局</td>
+						<td>1</td>
+						<td>1</td>
+						<td>1%</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+
+		<script>
+			layui.use('form', function() {
+				var form = layui.form;
+
+				console.log(getThisWeek()[0], getThisMonth(), getLastMonth())
+
+				//监听提交
+				form.on('submit(form)', function(data) {
+					console.log('提交', data.field)
+					var requestData = {}
+					switch (data.field.sex) {
+						case 'thisweek':
+							// 本周
+							requestData.begin = getThisWeek()[0];
+							requestData.end = getThisWeek()[1];
+							break;
+						case 'thismonth':
+							// 本月
+							requestData.begin = getThisMonth()[0];
+							requestData.end = getThisMonth()[1];
+							break;
+						case 'lastmonth':
+							// 上月
+							requestData.begin = getLastMonth()[0];
+							requestData.end = getLastMonth()[1];
+							break;
+						default:
+							break;
+					}
+					console.log(requestData)
+
+					// 搜索
+					return false;
+				});
+
+				form.on('reset(form)', function(data) {
+					layer.msg(JSON.stringify(data.field));
+					console.log('重置：', data.field)
+					// 重置
+					return false;
+				});
+			});
+
+			layui.use('laydate', function() {
+				var laydate = layui.laydate;
+				//日期时间范围
+				laydate.render({
+					elem: '#test10',
+					type: 'date',
+					range: true,
+					theme: 'orange'
+				});
+			});
+
+
+
+
+			// 获取本周开始和结束日期: [yyyy-MM-dd, yyyy-MM-dd]
+			function getThisWeek() {
+				// 1.创建Date对象
+				const date = new Date()
+				// 2.获取今日的年月日，及周几
+				const year = date.getFullYear()
+				const month = date.getMonth()
+				const day = date.getDate()
+				const week = date.getDay()
+				// 3.获取本周开始日期并格式化为yyyy-MM-dd格式
+				const thisWeekStartDate = formatDate(new Date(year, month, day - week + 1))
+				// 若本周开始日期为上月月底日期也无需担心，如new Date()中的参数为2022,3,-3,则此条语句会输出2022-03-28
+				// 4.获取本周结束日期并格式化为yyyy-MM-dd格式
+				const thisWeekEndDate = formatDate(new Date(year, month, day - week + 7))
+				const thisWeek = []
+				thisWeek.push(thisWeekStartDate, thisWeekEndDate)
+				// 5.返回结果
+				return thisWeek
+			}
+			// 获取本月开始和结束日期: [yyyy-MM-dd, yyyy-MM-dd]
+			function getThisMonth() {
+				const date = new Date()
+				const year = date.getFullYear()
+				const month = date.getMonth()
+				const thisMonthStartDate = formatDate(new Date(year, month, 1))
+				const thisMonthEndDate = formatDate(new Date(year, month + 1, 0))
+				// 下个月第0天表示本月最后一天
+				const thisMonth = []
+				thisMonth.push(thisMonthStartDate, thisMonthEndDate)
+				return thisMonth
+			}
+
+			// 获取上月日期
+			function getLastMonth() {
+				const date = new Date()
+				const year = date.getFullYear()
+				const month = date.getMonth()
+				const lastMonthStartDate = formatDate(new Date(year, month - 1, 1))
+				const lastMonthEndDate = formatDate(new Date(year, month, 0))
+				//本月第0天表示上个月最后一天
+				const lastMonth = []
+				lastMonth.push(lastMonthStartDate, lastMonthEndDate)
+				return lastMonth;
+			}
+
+			// 格式化日期: yyyy-MM-dd
+			function formatDate(date) {
+				const year = date.getFullYear()
+				let month = date.getMonth() + 1
+				let day = date.getDate()
+				if (month < 10) {
+					month = `0${month}`
+				}
+				if (day < 10) {
+					day = `0${day}`
+				}
+				return (`${year}-${month}-${day}`)
+			}
+		</script>
+
+	</body>
+</html>

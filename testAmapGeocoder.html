@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script type="text/javascript">
+		window._AMapSecurityConfig = {
+			securityJsCode: '608eeb7d7478f1c2cabe0b6622d92eba',
+		}
+	</script>
+	<script type="text/javascript"
+		src="https://webapi.amap.com/maps?v=2.0&key=8fbc8086b1f3ae65b417d48d39f2c19b&plugin=AMap.Geocoder"></script>
+		
+	<body>
+		
+		<script type="text/javascript">
+			var geocoder = new AMap.Geocoder();
+			geocoder.getLocation(
+				"苏州市相城区嘉元路1080号中翔金融大厦",
+				function(status, result) {
+					console.log(status, result);
+					if (status === "complete" && result.geocodes.length) {
+						var lnglat = result.geocodes[0].location;
+						console.log(lnglat);
+						console.log(lnglat.lat,lnglat.lng);
+					} else {
+						console.log("根据地址查询位置失败");
+					}
+				}
+			);
+		</script>
+	</body>
+</html>
