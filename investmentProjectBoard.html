@@ -6,6 +6,7 @@
 		<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 		<link href="http://layui.itmtr.cn/layui/dist/css/layui.css" rel="stylesheet">
 		<!-- <link href="./css/common.css" rel="stylesheet" /> -->
+
 	</head>
 	<style>
 		@font-face {
@@ -21,6 +22,26 @@
 			-webkit-font-smoothing: antialiased;
 			-webkit-text-stroke-width: 0.2px;
 			-moz-osx-font-smoothing: grayscale;
+		}
+
+		/* 新增固钉 */
+		.affix {
+			width: 100%;
+			background: #fff;
+			z-index: 10;
+		}
+
+		.affix .layui-form {
+			padding: 15px 20px 10px 5px;
+		}
+
+		.affix .t-header {
+			display: table !important;
+			width: calc(100% - 40px);
+			margin: 0 20px;
+		}
+		.affix~.t-container {
+			padding-top: 150px;
 		}
 
 		h1 {
@@ -74,8 +95,9 @@
 			text-align: center;
 			color: #fff;
 		}
+
 		/* 需要固定宽度…… */
-	/* 	.table .t-thead tr {
+		/* 	.table .t-thead tr {
 			display: table;
 			width: 100%;
 			table-layout: fixed;
@@ -123,6 +145,7 @@
 		}
 
 		.table .t-tbody tr td.t-tworow div:last-child {
+
 			margin: 0 5px 0 5px;
 		}
 
@@ -203,12 +226,16 @@
 
 		/***************************************  新样式  ****************************************************/
 		.layui-form {
-			padding: 20px 20px 0 5px;
+			padding: 20px 20px 15px 5px;
 		}
 
 		.layui-form-label {
 			box-sizing: content-box;
 			width: auto;
+			margin: 0;
+		}
+
+		.layui-form-item:last-child {
 			margin: 0;
 		}
 
@@ -291,18 +318,8 @@
 
 		/* 返回 */
 		.back {
-			box-sizing: border-box;
-			margin: 0;
-			color: rgba(0, 0, 0, 0.65);
-			font-size: 14px;
-			line-height: 1.5;
-			list-style: none;
-			position: fixed;
-			right: 25px;
-			bottom: 200px;
-			z-index: 10;
-			height: 44px;
-			width: 44px;
+			float: right;
+			width: 60px;
 			cursor: pointer;
 		}
 
@@ -318,28 +335,28 @@
 		}
 	</style>
 	<body>
-		<h1>
-			<small></small>
-			<span class="web-font">招商项目看板</span>
-			<small>
-				<span>
-					<i class="glyphicon glyphicon-star-empty t-orange"></i> 表示非重点项目
-				</span>
-				<span>
-					<i class="glyphicon glyphicon-star t-orange"></i> 表示区重点项目
-				</span>
-				<span>
-					<i class="glyphicon glyphicon-star t-orange"></i>
-					<i class="glyphicon glyphicon-star t-orange"></i> 表示市重点项目
-				</span>
-				<span>
-					<i class="glyphicon glyphicon-star t-orange"></i>
-					<i class="glyphicon glyphicon-star t-orange"></i>
-					<i class="glyphicon glyphicon-star t-orange"></i> 表示省重点项目
-				</span>
-			</small>
-		</h1>
-		<div>
+		<div id="myAffix" data-spy="affix">
+			<h1>
+				<small></small>
+				<span class="web-font">招商项目看板</span>
+				<small>
+					<span>
+						<i class="glyphicon glyphicon-star-empty t-orange"></i> 表示非重点项目
+					</span>
+					<span>
+						<i class="glyphicon glyphicon-star t-orange"></i> 表示区重点项目
+					</span>
+					<span>
+						<i class="glyphicon glyphicon-star t-orange"></i>
+						<i class="glyphicon glyphicon-star t-orange"></i> 表示市重点项目
+					</span>
+					<span>
+						<i class="glyphicon glyphicon-star t-orange"></i>
+						<i class="glyphicon glyphicon-star t-orange"></i>
+						<i class="glyphicon glyphicon-star t-orange"></i> 表示省重点项目
+					</span>
+				</small>
+			</h1>
 			<form class="layui-form" action="">
 				<div class="layui-form-item">
 					<div class="layui-inline">
@@ -374,379 +391,420 @@
 						<button type="reset" class="layui-btn layui-btn-primary" lay-filter="form">重置</button>
 						<button type="submit" class="layui-btn" lay-submit="" lay-filter="form">查询</button>
 					</div>
+					<div class="back">
+						<div class="back-content" @click="goBack"></div>
+					</div>
 				</div>
 			</form>
-			<div class="t-container">
-				<table class="table">
-					<thead class="t-thead">
-						<tr>
-							<th>序号</th>
-							<th>项目板块</th>
-							<th>项目名称</th>
-							<th>产业类别</th>
-							<th>体系类别</th>
-							<th>签约时间</th>
-							<th>是否重点项目</th>
-							<th>是否使用载体</th>
-							<th width="320px">项目落地</th>
-							<!-- <th width="220px">开工</th>
+			<table class="table hidden t-header">
+				<thead class="t-thead">
+					<tr>
+						<th>序号</th>
+						<th>项目板块</th>
+						<th>项目名称</th>
+						<th>产业类别</th>
+						<th>体系类别</th>
+						<th>签约时间</th>
+						<th>是否重点项目</th>
+						<th>是否使用载体</th>
+						<th width="320px">项目落地</th>
+						<!-- <th width="220px">开工</th>
+						<th width="220px">竣工</th> -->
+						<th>土地资源进度</th>
+						<th>工改项目进展</th>
+						<th width="220px">投产运营</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div class="t-container">
+			<table class="table">
+				<thead class="t-thead">
+					<tr>
+						<th>序号</th>
+						<th>项目板块</th>
+						<th>项目名称</th>
+						<th>产业类别</th>
+						<th>体系类别</th>
+						<th>签约时间</th>
+						<th>是否重点项目</th>
+						<th>是否使用载体</th>
+						<th width="320px">项目落地</th>
+						<!-- <th width="220px">开工</th>
 							<th width="220px">竣工</th> -->
-							<th>土地资源进度</th>
-							<th>工改项目进展</th>
-							<th width="220px">投产运营</th>
-						</tr>
-					</thead>
-					<tbody class="t-tbody">
-						<tr>
-							<td>
-								<div class="t-left-radius">1</div>
-							</td>
-							<td>
-								<div>某某镇</div>
-							</td>
-							<td>
-								<div>项目名称项目名称</div>
-							</td>
-							<td>
-								<div>产业分类</div>
-							</td>
-							<td>
-								<div>体系分类</div>
-							</td>
-							<td>
-								<div>2021-07-01</div>
-							</td>
-							<td>
-								<div>
-									<i class="glyphicon glyphicon-star t-orange"></i>
-									<i class="glyphicon glyphicon-star t-orange"></i>
-									<i class="glyphicon glyphicon-star t-orange"></i>
-								</div>
-							</td>
-							<td>
-								<div class="t-right-radius">中翔金融大厦</div>
-							</td>
-							<!-- t-tworow  longCard t-blue/t-grey文字颜色 -->
-							<td class="t-tworow" width="320px">
-								<div class="longCard">
-									<div class="t-blue">xxxx项目</div>
-									<!-- <div class="t-grey">xxxxxxxxxxxxxxxxxxxxxxxx项目（2021-07-01）</div>
+						<th>土地资源进度</th>
+						<th>工改项目进展</th>
+						<th width="220px">投产运营</th>
+					</tr>
+				</thead>
+				<tbody class="t-tbody">
+					<tr>
+						<td>
+							<div class="t-left-radius">1</div>
+						</td>
+						<td>
+							<div>某某镇</div>
+						</td>
+						<td>
+							<div>项目名称项目名称</div>
+						</td>
+						<td>
+							<div>产业分类</div>
+						</td>
+						<td>
+							<div>体系分类</div>
+						</td>
+						<td>
+							<div>2021-07-01</div>
+						</td>
+						<td>
+							<div>
+								<i class="glyphicon glyphicon-star t-orange"></i>
+								<i class="glyphicon glyphicon-star t-orange"></i>
+								<i class="glyphicon glyphicon-star t-orange"></i>
+							</div>
+						</td>
+						<td>
+							<div class="t-right-radius">中翔金融大厦</div>
+						</td>
+						<!-- t-tworow  longCard t-blue/t-grey文字颜色 -->
+						<td class="t-tworow" width="320px">
+							<div class="longCard">
+								<div class="t-blue">xxxx项目</div>
+								<!-- <div class="t-grey">xxxxxxxxxxxxxxxxxxxxxxxx项目（2021-07-01）</div>
 									<div class="t-blue">xxxx项目（2021-07-02）</div>
 									<div class="t-grey">xxxx项目（2021-07-01）</div> -->
-								</div>
-							</td>
-							<td>
-								<div class="t-left-radius t-orange t-weight">20%</div>
-							</td>
-							<td>
-								<div class="t-right-radius t-blue t-weight">20%</div>
-							</td>
-							<td class="t-tworow" width="220px">
-								<div class="t-orange">计划上报（2021-07-02）</div>
-								<div class="t-grey">/</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div class="t-left-radius">2</div>
-							</td>
-							<td>
-								<div>某某镇</div>
-							</td>
-							<td>
-								<div>项目名称项名称项目名称项目名称项目名称项目名称目名称项目名称项目名称项目名称</div>
-							</td>
-							<td>
-								<div>产业分类</div>
-							</td>
-							<td>
-								<div>体系分类</div>
-							</td>
-							<td>
-								<div>2021-07-01</div>
-							</td>
-							<td>
-								<div>
-									<i class="glyphicon glyphicon-star-empty t-orange"></i>
-								</div>
-							</td>
-							<td>
-								<div class="t-right-radius">否</div>
-							</td>
-							<td class="t-tworow">
-								<div class="longCard">
-									<div class="t-blue">111项目</div>
-									<div class="t-blue">112项目</div>
-									<div class="t-blue">113项目</div>
-									<div class="t-blue">114项目</div>
-									<div class="t-blue">111项目</div>
-									<div class="t-blue">112项目</div>
-									<div class="t-blue">113项目</div>
-									<div class="t-blue">114项目</div>
-									<div class="t-grey">2222222222222222222222222222222222222项目（2021-07-01）</div>
-									<div class="t-blue">33项目（2021-07-02）</div>
-									<div class="t-grey">4项目（2021-07-01）</div>
-								</div>
-							</td>
-							<!-- <td class="t-tworow">
+							</div>
+						</td>
+						<td>
+							<div class="t-left-radius t-orange t-weight">20%</div>
+						</td>
+						<td>
+							<div class="t-right-radius t-blue t-weight">20%</div>
+						</td>
+						<td class="t-tworow" width="220px">
+							<div class="t-orange">计划上报（2021-07-02）</div>
+							<div class="t-grey">/</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="t-left-radius">2</div>
+						</td>
+						<td>
+							<div>某某镇</div>
+						</td>
+						<td>
+							<div>项目名称项名称项目名称项目名称项目名称项目名称目名称项目名称项目名称项目名称</div>
+						</td>
+						<td>
+							<div>产业分类</div>
+						</td>
+						<td>
+							<div>体系分类</div>
+						</td>
+						<td>
+							<div>2021-07-01</div>
+						</td>
+						<td>
+							<div>
+								<i class="glyphicon glyphicon-star-empty t-orange"></i>
+							</div>
+						</td>
+						<td>
+							<div class="t-right-radius">否</div>
+						</td>
+						<td class="t-tworow">
+							<div class="longCard">
+								<div class="t-blue">111项目</div>
+								<div class="t-blue">112项目</div>
+								<div class="t-blue">113项目</div>
+								<div class="t-blue">114项目</div>
+								<div class="t-blue">111项目</div>
+								<div class="t-blue">112项目</div>
+								<div class="t-blue">113项目</div>
+								<div class="t-blue">114项目</div>
+								<div class="t-grey">2222222222222222222222222222222222222项目（2021-07-01）</div>
+								<div class="t-blue">33项目（2021-07-02）</div>
+								<div class="t-grey">4项目（2021-07-01）</div>
+							</div>
+						</td>
+						<!-- <td class="t-tworow">
 								<div class="t-blue">实际时间（2021-07-02）</div>
 								<div class="t-grey">计划上报（2021-07-01）</div>
 							</td> -->
 
-							<td>
-								<div class="t-left-radius t-orange t-weight">20%</div>
-							</td>
-							<td>
-								<div class="t-right-radius t-blue t-weight">20%</div>
-							</td>
-							<td class="t-tworow">
-								<div class="t-orange">计划上报（2021-07-02）</div>
-								<div class="t-grey">/</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div class="t-left-radius">2</div>
-							</td>
-							<td>
-								<div>某某镇</div>
-							</td>
-							<td>
-								<div>项目名称项名称项目名称项目名称项目名称项目名称目名称项目名称项目名称项目名称</div>
-							</td>
-							<td>
-								<div>产业分类</div>
-							</td>
-							<td>
-								<div>体系分类</div>
-							</td>
-							<td>
-								<div>2021-07-01</div>
-							</td>
-							<td>
-								<div>
-									<i class="glyphicon glyphicon-star-empty t-orange"></i>
-								</div>
-							</td>
-							<td>
-								<div class="t-right-radius">否</div>
-							</td>
-							<td class="t-tworow">
-								<div class="longCard">
-									<div class="t-blue">111项目</div>
-									<div class="t-blue">112项目</div>
-									<div class="t-blue">113项目</div>
-									<div class="t-blue">114项目</div>
-									<div class="t-blue">111项目</div>
-									<div class="t-blue">112项目</div>
-									<div class="t-blue">113项目</div>
-									<div class="t-blue">114项目</div>
-									<div class="t-grey">2222222222222222222222222222222222222项目（2021-07-01）</div>
-									<div class="t-blue">33项目（2021-07-02）</div>
-									<div class="t-grey">4项目（2021-07-01）</div>
-								</div>
-							</td>
-							<!-- <td class="t-tworow">
+						<td>
+							<div class="t-left-radius t-orange t-weight">20%</div>
+						</td>
+						<td>
+							<div class="t-right-radius t-blue t-weight">20%</div>
+						</td>
+						<td class="t-tworow">
+							<div class="t-orange">计划上报（2021-07-02）</div>
+							<div class="t-grey">/</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="t-left-radius">3</div>
+						</td>
+						<td>
+							<div>某某镇</div>
+						</td>
+						<td>
+							<div>项目名称项名称项目名称项目名称项目名称项目名称目名称项目名称项目名称项目名称</div>
+						</td>
+						<td>
+							<div>产业分类</div>
+						</td>
+						<td>
+							<div>体系分类</div>
+						</td>
+						<td>
+							<div>2021-07-01</div>
+						</td>
+						<td>
+							<div>
+								<i class="glyphicon glyphicon-star-empty t-orange"></i>
+							</div>
+						</td>
+						<td>
+							<div class="t-right-radius">否</div>
+						</td>
+						<td class="t-tworow">
+							<div class="longCard">
+								<div class="t-blue">111项目</div>
+								<div class="t-blue">112项目</div>
+								<div class="t-blue">113项目</div>
+								<div class="t-blue">114项目</div>
+								<div class="t-blue">111项目</div>
+								<div class="t-blue">112项目</div>
+								<div class="t-blue">113项目</div>
+								<div class="t-blue">114项目</div>
+								<div class="t-grey">2222222222222222222222222222222222222项目（2021-07-01）</div>
+								<div class="t-blue">33项目（2021-07-02）</div>
+								<div class="t-grey">4项目（2021-07-01）</div>
+							</div>
+						</td>
+						<!-- <td class="t-tworow">
 								<div class="t-blue">实际时间（2021-07-02）</div>
 								<div class="t-grey">计划上报（2021-07-01）</div>
 							</td> -->
-						
-							<td>
-								<div class="t-left-radius t-orange t-weight">20%</div>
-							</td>
-							<td>
-								<div class="t-right-radius t-blue t-weight">20%</div>
-							</td>
-							<td class="t-tworow">
-								<div class="t-orange">计划上报（2021-07-02）</div>
-								<div class="t-grey">/</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div class="t-left-radius">2</div>
-							</td>
-							<td>
-								<div>某某镇</div>
-							</td>
-							<td>
-								<div>项目名称项名称项目名称项目名称项目名称项目名称目名称项目名称项目名称项目名称</div>
-							</td>
-							<td>
-								<div>产业分类</div>
-							</td>
-							<td>
-								<div>体系分类</div>
-							</td>
-							<td>
-								<div>2021-07-01</div>
-							</td>
-							<td>
-								<div>
-									<i class="glyphicon glyphicon-star-empty t-orange"></i>
-								</div>
-							</td>
-							<td>
-								<div class="t-right-radius">否</div>
-							</td>
-							<td class="t-tworow">
-								<div class="longCard">
-									<div class="t-blue">111项目</div>
-									<div class="t-blue">112项目</div>
-									<div class="t-blue">113项目</div>
-									<div class="t-blue">114项目</div>
-									<div class="t-blue">111项目</div>
-									<div class="t-blue">112项目</div>
-									<div class="t-blue">113项目</div>
-									<div class="t-blue">114项目</div>
-									<div class="t-grey">2222222222222222222222222222222222222项目（2021-07-01）</div>
-									<div class="t-blue">33项目（2021-07-02）</div>
-									<div class="t-grey">4项目（2021-07-01）</div>
-								</div>
-							</td>
-							<!-- <td class="t-tworow">
+
+						<td>
+							<div class="t-left-radius t-orange t-weight">20%</div>
+						</td>
+						<td>
+							<div class="t-right-radius t-blue t-weight">20%</div>
+						</td>
+						<td class="t-tworow">
+							<div class="t-orange">计划上报（2021-07-02）</div>
+							<div class="t-grey">/</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="t-left-radius">4</div>
+						</td>
+						<td>
+							<div>某某镇</div>
+						</td>
+						<td>
+							<div>项目名称项名称项目名称项目名称项目名称项目名称目名称项目名称项目名称项目名称</div>
+						</td>
+						<td>
+							<div>产业分类</div>
+						</td>
+						<td>
+							<div>体系分类</div>
+						</td>
+						<td>
+							<div>2021-07-01</div>
+						</td>
+						<td>
+							<div>
+								<i class="glyphicon glyphicon-star-empty t-orange"></i>
+							</div>
+						</td>
+						<td>
+							<div class="t-right-radius">否</div>
+						</td>
+						<td class="t-tworow">
+							<div class="longCard">
+								<div class="t-blue">111项目</div>
+								<div class="t-blue">112项目</div>
+								<div class="t-blue">113项目</div>
+								<div class="t-blue">114项目</div>
+								<div class="t-blue">111项目</div>
+								<div class="t-blue">112项目</div>
+								<div class="t-blue">113项目</div>
+								<div class="t-blue">114项目</div>
+								<div class="t-grey">2222222222222222222222222222222222222项目（2021-07-01）</div>
+								<div class="t-blue">33项目（2021-07-02）</div>
+								<div class="t-grey">4项目（2021-07-01）</div>
+							</div>
+						</td>
+						<!-- <td class="t-tworow">
 								<div class="t-blue">实际时间（2021-07-02）</div>
 								<div class="t-grey">计划上报（2021-07-01）</div>
 							</td> -->
-						
-							<td>
-								<div class="t-left-radius t-orange t-weight">20%</div>
-							</td>
-							<td>
-								<div class="t-right-radius t-blue t-weight">20%</div>
-							</td>
-							<td class="t-tworow">
-								<div class="t-orange">计划上报（2021-07-02）</div>
-								<div class="t-grey">/</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div class="t-left-radius">2</div>
-							</td>
-							<td>
-								<div>某某镇</div>
-							</td>
-							<td>
-								<div>项目名称项名称项目名称项目名称项目名称项目名称目名称项目名称项目名称项目名称</div>
-							</td>
-							<td>
-								<div>产业分类</div>
-							</td>
-							<td>
-								<div>体系分类</div>
-							</td>
-							<td>
-								<div>2021-07-01</div>
-							</td>
-							<td>
-								<div>
-									<i class="glyphicon glyphicon-star-empty t-orange"></i>
-								</div>
-							</td>
-							<td>
-								<div class="t-right-radius">否</div>
-							</td>
-							<td class="t-tworow">
-								<div class="longCard">
-									<div class="t-blue">111项目</div>
-									<div class="t-blue">112项目</div>
-									<div class="t-blue">113项目</div>
-									<div class="t-blue">114项目</div>
-									<div class="t-blue">111项目</div>
-									<div class="t-blue">112项目</div>
-									<div class="t-blue">113项目</div>
-									<div class="t-blue">114项目</div>
-									<div class="t-grey">2222222222222222222222222222222222222项目（2021-07-01）</div>
-									<div class="t-blue">33项目（2021-07-02）</div>
-									<div class="t-grey">4项目（2021-07-01）</div>
-								</div>
-							</td>
-							<!-- <td class="t-tworow">
+
+						<td>
+							<div class="t-left-radius t-orange t-weight">20%</div>
+						</td>
+						<td>
+							<div class="t-right-radius t-blue t-weight">20%</div>
+						</td>
+						<td class="t-tworow">
+							<div class="t-orange">计划上报（2021-07-02）</div>
+							<div class="t-grey">/</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="t-left-radius">2</div>
+						</td>
+						<td>
+							<div>某某镇</div>
+						</td>
+						<td>
+							<div>项目名称项名称项目名称项目名称项目名称项目名称目名称项目名称项目名称项目名称</div>
+						</td>
+						<td>
+							<div>产业分类</div>
+						</td>
+						<td>
+							<div>体系分类</div>
+						</td>
+						<td>
+							<div>2021-07-01</div>
+						</td>
+						<td>
+							<div>
+								<i class="glyphicon glyphicon-star-empty t-orange"></i>
+							</div>
+						</td>
+						<td>
+							<div class="t-right-radius">否</div>
+						</td>
+						<td class="t-tworow">
+							<div class="longCard">
+								<div class="t-blue">111项目</div>
+								<div class="t-blue">112项目</div>
+								<div class="t-blue">113项目</div>
+								<div class="t-blue">114项目</div>
+								<div class="t-blue">111项目</div>
+								<div class="t-blue">112项目</div>
+								<div class="t-blue">113项目</div>
+								<div class="t-blue">114项目</div>
+								<div class="t-grey">2222222222222222222222222222222222222项目（2021-07-01）</div>
+								<div class="t-blue">33项目（2021-07-02）</div>
+								<div class="t-grey">4项目（2021-07-01）</div>
+							</div>
+						</td>
+						<!-- <td class="t-tworow">
 								<div class="t-blue">实际时间（2021-07-02）</div>
 								<div class="t-grey">计划上报（2021-07-01）</div>
 							</td> -->
-						
-							<td>
-								<div class="t-left-radius t-orange t-weight">20%</div>
-							</td>
-							<td>
-								<div class="t-right-radius t-blue t-weight">20%</div>
-							</td>
-							<td class="t-tworow">
-								<div class="t-orange">计划上报（2021-07-02）</div>
-								<div class="t-grey">/</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div class="t-left-radius">2</div>
-							</td>
-							<td>
-								<div>某某镇</div>
-							</td>
-							<td>
-								<div>项目名称项名称项目名称项目名称项目名称项目名称目名称项目名称项目名称项目名称</div>
-							</td>
-							<td>
-								<div>产业分类</div>
-							</td>
-							<td>
-								<div>体系分类</div>
-							</td>
-							<td>
-								<div>2021-07-01</div>
-							</td>
-							<td>
-								<div>
-									<i class="glyphicon glyphicon-star-empty t-orange"></i>
-								</div>
-							</td>
-							<td>
-								<div class="t-right-radius">否</div>
-							</td>
-							<td class="t-tworow">
-								<div class="longCard">
-									<div class="t-blue">111项目</div>
-									<div class="t-blue">112项目</div>
-									<div class="t-blue">113项目</div>
-									<div class="t-blue">114项目</div>
-									<div class="t-blue">111项目</div>
-									<div class="t-blue">112项目</div>
-									<div class="t-blue">113项目</div>
-									<div class="t-blue">114项目</div>
-									<div class="t-grey">2222222222222222222222222222222222222项目（2021-07-01）</div>
-									<div class="t-blue">33项目（2021-07-02）</div>
-									<div class="t-grey">4项目（2021-07-01）</div>
-								</div>
-							</td>
-							<!-- <td class="t-tworow">
+
+						<td>
+							<div class="t-left-radius t-orange t-weight">20%</div>
+						</td>
+						<td>
+							<div class="t-right-radius t-blue t-weight">20%</div>
+						</td>
+						<td class="t-tworow">
+							<div class="t-orange">计划上报（2021-07-02）</div>
+							<div class="t-grey">/</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="t-left-radius">2</div>
+						</td>
+						<td>
+							<div>某某镇</div>
+						</td>
+						<td>
+							<div>项目名称项名称项目名称项目名称项目名称项目名称目名称项目名称项目名称项目名称</div>
+						</td>
+						<td>
+							<div>产业分类</div>
+						</td>
+						<td>
+							<div>体系分类</div>
+						</td>
+						<td>
+							<div>2021-07-01</div>
+						</td>
+						<td>
+							<div>
+								<i class="glyphicon glyphicon-star-empty t-orange"></i>
+							</div>
+						</td>
+						<td>
+							<div class="t-right-radius">否</div>
+						</td>
+						<td class="t-tworow">
+							<div class="longCard">
+								<div class="t-blue">111项目</div>
+								<div class="t-blue">112项目</div>
+								<div class="t-blue">113项目</div>
+								<div class="t-blue">114项目</div>
+								<div class="t-blue">111项目</div>
+								<div class="t-blue">112项目</div>
+								<div class="t-blue">113项目</div>
+								<div class="t-blue">114项目</div>
+								<div class="t-grey">2222222222222222222222222222222222222项目（2021-07-01）</div>
+								<div class="t-blue">33项目（2021-07-02）</div>
+								<div class="t-grey">4项目（2021-07-01）</div>
+							</div>
+						</td>
+						<!-- <td class="t-tworow">
 								<div class="t-blue">实际时间（2021-07-02）</div>
 								<div class="t-grey">计划上报（2021-07-01）</div>
 							</td> -->
-						
-							<td>
-								<div class="t-left-radius t-orange t-weight">20%</div>
-							</td>
-							<td>
-								<div class="t-right-radius t-blue t-weight">20%</div>
-							</td>
-							<td class="t-tworow">
-								<div class="t-orange">计划上报（2021-07-02）</div>
-								<div class="t-grey">/</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+
+						<td>
+							<div class="t-left-radius t-orange t-weight">20%</div>
+						</td>
+						<td>
+							<div class="t-right-radius t-blue t-weight">20%</div>
+						</td>
+						<td class="t-tworow">
+							<div class="t-orange">计划上报（2021-07-02）</div>
+							<div class="t-grey">/</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 
-
-		<div class="back">
-			<div class="back-content" @click="goBack"></div>
-		</div>
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+			integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous">
+		</script>
 		<script src="http://layui.itmtr.cn/layui/dist/layui.js"></script>
 		<script>
+			$('#myAffix').affix({
+				offset: {
+					top: 20,
+				}
+			});
+
+			var widths = [];
+			$('.t-container th').each(function(index, item) {
+				widths.push($(item).width());
+			});
+			$('.t-header th').each(function(index, item) {
+				$(item).width(widths[index] + 'px');
+			});
+
+
+
+
+
 			layui.use('form', function() {
 				var form = layui.form;
 
