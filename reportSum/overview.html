@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>项目总览</title>
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/layui/2.6.5/css/layui.css">
+	</head>
+	<style>
+		/* 共用样式 */
+		label {
+			box-sizing: content-box;
+		}
+
+		body {
+			background: #fff;
+			color: #333;
+			padding: 30px;
+		}
+
+		header {
+			background: url(./img/bg-header.png) no-repeat left bottom /100% 100%;
+			color: #fff;
+			height: 106px;
+			line-height: 106px;
+			margin-bottom: 30px
+		}
+
+		.layui-form .layui-form-item,
+		.layui-form-item .layui-inline,
+		.layui-form-label {
+			margin: 0;
+		}
+
+		.layui-btn {
+			background-color: #fff;
+			color: #245FE6;
+			border-radius: 10px;
+		}
+
+		.layui-btn:hover {
+			color: #245FE6;
+		}
+
+		header .layui-input,
+		header .layui-select,
+		header .layui-textarea {
+			background: #fff4;
+		}
+
+
+		/* 自设样式 */
+
+		.z-pannel {
+			border-radius: 10px;
+			background: #F2F7FF;
+			padding: 15px 30px;
+			margin-bottom: 30px;
+			color: #9BB1C8;
+			font-size: 18px;
+		}
+
+		.z-pannel .layui-card {
+			margin-bottom: 30px;
+		}
+
+		.pair_name {
+			line-height: 60px;
+			padding: 0 0 0 15px;
+		}
+
+		.pair {
+			color: #043D75;
+			font-weight: bold;
+			line-height: 70px;
+			padding: 0 0 14px 15px;
+		}
+
+		.pair strong {
+			font-size: 34px;
+		}
+
+		.pair-img {
+			padding: 25px 0 0 0;
+		}
+
+
+		h2 {
+			color: #333;
+			font-size: 24px;
+			text-align: center;
+			background: url(./img/bg-title-l.png) no-repeat center left, url(./img/bg-title-r.png) no-repeat center right;
+			margin: 15px 0;
+			font-weight: bold;
+		}
+
+		h4 {
+			line-height: 50px;
+			padding: 0 0 0 15px;
+			margin: 0;
+			color: #333333;
+			font-size: 18px;
+		}
+
+		.layui-card {
+			border-radius: 10px;
+			box-shadow: 2px 2px 4px 0px rgba(145, 145, 145, 0.0900);
+
+		}
+
+		/*  */
+		.rows {
+			margin: -7.5px;
+			background: transparent;
+		}
+
+		.rows:after,
+		.rows:before {
+			content: "";
+			display: block;
+			clear: both;
+		}
+
+		.col-5 {
+			float: left;
+			width: 20%;
+			padding: 7.5px;
+		}
+
+		.col-card {
+			height: 140px;
+			background: url(./img/bg-card.png) no-repeat left bottom /100% 100%;
+		}
+	</style>
+
+
+	<!-- <script src="dist/extension/dataTool.js"></script> -->
+	<body class="layui-fluid">
+		<header>
+			<form class="layui-form" action="">
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">年份选择：</label>
+						<div class="layui-input-inline">
+							<input type="text" name="projectname" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">级别选择:</label>
+						<div class="layui-input-inline">
+							<select name="projectblock">
+								<option value="">请选择</option>
+								<option value="1">layer</option>
+								<option value="2">form</option>
+								<option value="3">layim</option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">类型选择：</label>
+						<div class="layui-input-inline">
+							<select name="projectlevel">
+								<option value="">请选择</option>
+								<option value="1">layer</option>
+								<option value="2">form</option>
+								<option value="3">layim</option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<button type="reset" class="layui-btn" lay-filter="form">重置</button>
+						<button type="submit" class="layui-btn" lay-submit="" lay-filter="form">页面导出</button>
+					</div>
+					<div class="back">
+						<div class="back-content" @click="goBack"></div>
+					</div>
+				</div>
+			</form>
+		</header>
+
+		<div class="z-pannel">
+			<h2>出入库数据分析</h2>
+			<div class="layui-row layui-col-space30">
+				<div class="layui-col-md3">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							<div class="layui-row">
+								<div class="layui-col-md8">
+									<p class="pair_name">入库项目数</p>
+									<p class="pair"> <strong>62</strong><span>（个）<span></p>
+								</div>
+								<div class="layui-col-md4">
+									<div class="pair-img"><img src="./img/crk_1.png" /></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-card">
+						<div class="layui-card-body">
+							<div class="layui-row">
+								<div class="layui-col-md8">
+									<p class="pair_name">未入库项目数</p>
+									<p class="pair"> <strong>62</strong><span>（个）<span></p>
+								</div>
+								<div class="layui-col-md4">
+									<div class="pair-img"><img src="./img/crk_3.png" /></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md3">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							<div class="layui-row">
+								<div class="layui-col-md8">
+									<p class="pair_name">出库项目数</p>
+									<p class="pair"> <strong>62</strong><span>（个）<span></p>
+								</div>
+								<div class="layui-col-md4">
+									<div class="pair-img"><img src="./img/crk_2.png" /></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-card">
+						<div class="layui-card-body">
+							<div class="layui-row">
+								<div class="layui-col-md8">
+									<p class="pair_name">退出项目数</p>
+									<p class="pair"> <strong>62</strong><span>（个）<span></p>
+								</div>
+								<div class="layui-col-md4">
+									<div class="pair-img"><img src="./img/crk_4.png" /></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- </div>
+		</div> -->
+				<div class="layui-col-md6">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							<h4>出入库数据</h4>
+							<div id="pies" style="width: 100%;height:300px;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="rows">
+				<div class="col-5">
+					<div class="col-card">
+						<div class="layui-card-body">
+							<div class="layui-row">
+								<div class="layui-col-md4">
+									<div class="pair-img"><img src="./img/crk_2.png" /></div>
+								</div>
+								<div class="layui-col-md8">
+									<p class="pair_name">已立项项目</p>
+									<p class="pair"> <strong>62</strong><span>（个）<span></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-5">
+					<div class="col-card">
+						拿地项目
+					</div>
+				</div>
+				<div class="col-5">
+					<div class="col-card">
+						完成规划
+					</div>
+				</div>
+				<div class="col-5">
+					<div class="col-card">
+						完成审图
+					</div>
+				</div>
+				<div class="col-5">
+					<div class="col-card">
+						完成施工许可
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="z-pannel">
+			<h2>超期数据分析</h2>
+			<div class="layui-row layui-col-space15">
+				<div class="layui-col-md4">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							<div class="layui-row">
+								<div class="layui-col-md4">
+									<div class="pair-img"><img src="./img/cq_1.png" /></div>
+								</div>
+								<div class="layui-col-md8">
+									<p class="pair_name">超期开工项目数</p>
+									<p class="pair"> <strong>62</strong><span>（个）<span></p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-card">
+						<div class="layui-card-body">
+							<div class="layui-row">
+								<div class="layui-col-md4">
+									<div class="pair-img"><img src="./img/cq_2.png" /></div>
+								</div>
+								<div class="layui-col-md8">
+									<p class="pair_name">超期开工项目率</p>
+									<p class="pair"> <strong>62</strong><span>（个）<span></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md8">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							超期项目清单
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="z-pannel">
+			<h2>未出库项目</h2>
+			<div class="layui-row layui-col-space30">
+				<div class="layui-col-md3">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							未出库项目数
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md3">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							最长入库用时
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md3">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							最短入库用时
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md3">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							未出库项目入库平均用时
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-row layui-col-space15">
+				<div class="layui-col-md8">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							入库时间项目数<span>（个）</span>
+							<div id="line" style="width: 100%;height:400px;"></div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md4">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							入库时间占比
+							<div id="pie4" style="width: 100%;height:400px;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="z-pannel">
+			<h2>已出库项目</h2>
+			<div class="layui-row layui-col-space30">
+				<div class="layui-col-md3">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							已出库项目数
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md3">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							最短出库用时
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md3">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							最长出库用时
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md3">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							出库项目入库至出库平均用时
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-row layui-col-space15">
+				<div class="layui-col-md8">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							入库至出库用时项目数<span>（个）</span>
+							<div id="bar1" style="width: 100%;height:400px;"></div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md4">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							入库至出库用时占比
+							<div id="pie5" style="width: 100%;height:400px;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-row layui-col-space15">
+				<div class="layui-col-md4">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							最短全流程审批用时
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md4">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							最长全流程审批用时
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md4">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							已出库项目全流程审批平均用时
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-row layui-col-space15">
+				<div class="layui-col-md8">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							全流程审批用时项目数<span>（个）</span>
+							<div id="bar2" style="width: 100%;height:400px;"></div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md4">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							全流程审批用时占比
+							<div id="pie6" style="width: 100%;height:400px;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+		<!--  <div id="main" style="width: 1024px;height:768px;"></div> -->
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.min.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+		<script src="http://layui.itmtr.cn/layui/dist/layui.js"></script>
+		<!-- <script src="http://layui.itmtr.cn/layui/release/layer/dist/layer.js?v=351-1"></script> -->
+		<!-- <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.3/dist/echarts.js"></script> -->
+		<script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/echarts/5.3.0/echarts.js"></script>
+		<script src="js/overview.js"></script>
+		<script type="text/javascript">
+			layui.use('form', function() {
+				var form = layui.form;
+
+				//监听提交
+				form.on('submit(form)', function(data) {
+					layer.msg(JSON.stringify(data.field));
+					console.log('提交', data.field)
+					// 搜索
+					return false;
+				});
+
+				form.on('reset(form)', function(data) {
+					layer.msg(JSON.stringify(data.field));
+					console.log('重置：', data.field)
+					// 重置
+					return false;
+				});
+			});
+
+
+
+			var myChartPies = echarts.init(document.getElementById('pies'));
+			myChartPies.setOption(pies);
+
+
+
+			var myChartLine = echarts.init(document.getElementById('line'));
+			myChartLine.setOption(line);
+
+
+			// // 基于准备好的dom，初始化echarts实例
+			// var myChart5 = echarts.init(document.getElementById('pie5'));
+			// var myChart5 = echarts.init(document.getElementById('pie5'));
+			// var myChart5 = echarts.init(document.getElementById('pie5'));
+			var myChart4 = echarts.init(document.getElementById('pie4'));
+			var myChart5 = echarts.init(document.getElementById('pie5'));
+			var myChart6 = echarts.init(document.getElementById('pie6'));
+			myChart4.setOption(pie);
+			myChart5.setOption(pie);
+			myChart6.setOption(pie);
+
+			var myChartBar1 = echarts.init(document.getElementById('bar1'));
+			var myChartBar2 = echarts.init(document.getElementById('bar2'));
+			bar.tooltip.borderColor = barColors[0] + '66';
+			bar.color = barColors[0];
+			myChartBar1.setOption(bar);
+			bar.tooltip.borderColor = barColors[1] + '66';
+			bar.color = barColors[1];
+			myChartBar2.setOption(bar);
+		</script>
+
+
+		<!-- http://echarts.zhangmuchen.top/#/iframeDetail?cid=xKNY69ljr_  斜纹柱状图-->
+		<!-- https://blog.51cto.com/u_15294985/5144416  背景横条 -->
+	</body>
+</html>
