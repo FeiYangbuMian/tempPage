@@ -6,6 +6,7 @@
 		<title>项目报告</title>
 		<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/layui/2.6.5/css/layui.css">
+		<link href="https://cdn.bootcdn.net/ajax/libs/layer/3.5.1/theme/default/layer.min.css" rel="stylesheet">
 		<style>
 			table {
 				width: 100%;
@@ -385,7 +386,7 @@
 				margin: 0 0 10px;
 				padding: 10px;
 				line-height: 1.5;
-				height: 80px;
+				height: 100px; // 80修改为100
 				border-radius: 6px;
 				border: 1px solid #CEE1FF;
 			}
@@ -403,6 +404,12 @@
 				font-size: 14px;
 				color: #666666;
 				line-height: 2;
+			}
+
+			/* 新增的 */
+			.flow-item .item-hover {
+				color: #57A94F;
+				font-size: 14px;
 			}
 
 			.flow-item.finished {
@@ -467,7 +474,7 @@
 			}
 
 			/* 项目悬停提示内容 */
-			#projectinfo {
+			/* #projectinfo {
 				width: 550px;
 				padding: 20px;
 				background: #FFFFFF;
@@ -490,7 +497,7 @@
 				border-right: 10px solid transparent;
 				border-top: 10px solid transparent;
 				border-bottom: 10px solid #007BE6;
-			}
+			} */
 
 			/* 跨行的占位计算结果 按百分比来  */
 			.ml1 {
@@ -738,6 +745,8 @@
 									<p><span class="layui-badge" :data-state="it.state"></span>
 										{{it.time}}（计划上报：{{it.plan}}）
 									</p>
+									<p class="item-hover"><span>悬停查看前置条件 <i
+												class="layui-icon layui-icon-location"></i></span></p>
 								</li>
 							</ul>
 						</div>
@@ -761,7 +770,7 @@
 					</div>
 				</div>
 				<!-- 项目悬停提示内容 -->
-				<div id="projectinfo">
+				<!-- <div id="projectinfo">
 					<table>
 						<tr>
 							<td>事项名称</td>
@@ -780,13 +789,23 @@
 							<td>建设用地规划许可证的核发（含建设用地批准书）</td>
 						</tr>
 					</table>
-				</div>
+				</div> -->
+
 			</div>
+		</div>
+		<div id="itemInfo">
+			<p style="border-bottom:1px solid #fff;min-width:200px;text-align:center;">前置条件</p>
+			<ul>
+				<li>1、项目登记</li>
+				<li>2、直接发包</li>
+				<li>3、合同归集</li>
+			</ul>
 		</div>
 		<!--  vue仅仅为了模拟jsp的一些功能（遍历），是示例，不可直接套用  -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.min.js"></script>
 		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 		<script src="http://layui.itmtr.cn/layui/release/layer/dist/layer.js?v=351-1"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/layer/3.5.1/layer.min.js"></script>
 		<script>
 			/* start----  是vue */
 			const vm = new Vue({
@@ -917,25 +936,41 @@
 			});
 
 			// 鼠标移进，展示事项信息
-			$('.flow-items').on('mouseenter', '.flow-item', function() {
-				let that = this;
-				console.log($(this).offset())
-				let tempTop = $(this).offset().top + 90;
-				let tempLeft = $(this).offset().left;
-				// 如果鼠标悬停的元素太靠右，left就设为总宽度-提示框宽度（其实就是right为提示框宽度）
-				if ($('.flow-contain').width() - tempLeft < 400) tempLeft = $('.flow-contain').width() - $(
-					'#projectinfo').width();
-				$('#projectinfo').css({
-					top: tempTop + "px",
-					left: tempLeft + 'px'
-				});
-				$('#projectinfo').show();
-			});
-			// 鼠标移走，隐藏事项信息
-			$('.flow-items').on('mouseleave', '.flow-item', function() {
-				let that = this;
-				$('#projectinfo').hide()
+			// $('.flow-items').on('mouseenter', '.flow-item', function() {
+			// 	let that = this;
+			// 	console.log($(this).offset())
+			// 	let tempTop = $(this).offset().top + 90;
+			// 	let tempLeft = $(this).offset().left;
+			// 	// 如果鼠标悬停的元素太靠右，left就设为总宽度-提示框宽度（其实就是right为提示框宽度）
+			// 	if ($('.flow-contain').width() - tempLeft < 400) tempLeft = $('.flow-contain').width() - $(
+			// 		'#projectinfo').width();
+			// 	$('#projectinfo').css({
+			// 		top: tempTop + "px",
+			// 		left: tempLeft + 'px'
+			// 	});
+			// 	$('#projectinfo').show();
+			// });
+			// // 鼠标移走，隐藏事项信息
+			// $('.flow-items').on('mouseleave', '.flow-item', function() {
+			// 	let that = this;
+			// 	$('#projectinfo').hide()
+			// });
 
+			// layer.tips('test','#',{
+			// 	tips:[3,'#57A94F']
+			// })
+
+			// 前置条件
+			$('.flow-items').on('mouseenter', '.item-hover', function() {
+				var that = this;
+				layer.open({
+					type: 4,
+					closeBtn: 0,
+					shade: 0,
+					time: 3000,
+					content: [$('#itemInfo').html(), that],
+					tips: [3, '#57A94F']
+				});
 			});
 
 			// 徽章背景色与文本修改
