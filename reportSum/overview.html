@@ -7,9 +7,10 @@
 		<link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/layui/2.6.5/css/layui.css">
 	</head>
 	<style>
-		/* 共用样式 */
+		/* 可共用样式 */
 		label {
 			box-sizing: content-box;
+			color: #fff;
 		}
 
 		body {
@@ -20,16 +21,26 @@
 
 		header {
 			background: url(./img/bg-header.png) no-repeat left bottom /100% 100%;
-			color: #fff;
+			/* color: #fff; */
 			height: 106px;
 			line-height: 106px;
-			margin-bottom: 30px
+			margin-bottom: 30px;
+			padding: 0 30px 0 10px;
+		}
+		input {
+			color: #fff;
+		}
+		input::-webkit-input-placeholder {
+			color: #fffd;
 		}
 
 		.layui-form .layui-form-item,
 		.layui-form-item .layui-inline,
 		.layui-form-label {
 			margin: 0;
+		}
+		.layui-form-select dl dd.layui-this {
+			background-color: #5383FF;
 		}
 
 		.layui-btn {
@@ -45,7 +56,7 @@
 		header .layui-input,
 		header .layui-select,
 		header .layui-textarea {
-			background: #fff4;
+			background: #fff4 !important;
 		}
 
 
@@ -54,7 +65,7 @@
 		.z-pannel {
 			border-radius: 10px;
 			background: #F2F7FF;
-			padding: 15px 30px;
+			padding: 15px 30px 30px;
 			margin-bottom: 30px;
 			color: #9BB1C8;
 			font-size: 18px;
@@ -65,15 +76,14 @@
 		}
 
 		.pair_name {
-			line-height: 60px;
-			padding: 0 0 0 15px;
+			line-height: 30px;
+			padding: 15px 0 15px 15px;
 		}
 
 		.pair {
 			color: #043D75;
-			font-weight: bold;
-			line-height: 70px;
-			padding: 0 0 14px 15px;
+			line-height: 40px;
+			padding: 0 0 34px 15px;
 		}
 
 		.pair strong {
@@ -82,6 +92,7 @@
 
 		.pair-img {
 			padding: 25px 0 0 0;
+			text-align: center;
 		}
 
 
@@ -100,6 +111,7 @@
 			margin: 0;
 			color: #333333;
 			font-size: 18px;
+			font-weight: bold;
 		}
 
 		.layui-card {
@@ -108,9 +120,16 @@
 
 		}
 
-		/*  */
+		.layui-col-md8 .layui-card:last-child,
+		.layui-col-md4 .layui-card:last-child,
+		.layui-col-md6 .layui-card:last-child,
+		.layui-col-md3 .layui-card:last-child {
+			margin: 0;
+		}
+
+		/* 蓝色的五块 */
 		.rows {
-			margin: -7.5px;
+			margin: 0 -15px;
 			background: transparent;
 		}
 
@@ -124,17 +143,126 @@
 		.col-5 {
 			float: left;
 			width: 20%;
-			padding: 7.5px;
+			padding: 15px;
 		}
 
 		.col-card {
 			height: 140px;
 			background: url(./img/bg-card.png) no-repeat left bottom /100% 100%;
 		}
+
+		.rows .pair_name {
+			color: #fff;
+			padding: 25px 0 5px 15px;
+		}
+
+		.rows .pair {
+			color: #fff;
+			padding: 0 0 0 15px;
+		}
+
+		/* 三张饼图 */
+		.pies_titles {
+			margin: 0 5% 14px;
+			width: 100%;
+		}
+
+		.pies_titles>li {
+			width: 30%;
+			text-align: center;
+			display: inline-block;
+		}
+
+		.pies_titles>li p {
+			width: 140px;
+			margin: 0 auto;
+			border-radius: 20px;
+			background: #E9EFFF;
+			color: #5383FF;
+			font-size: 18px;
+			line-height: 36px;
+		}
+
+		.pies_titles li:nth-child(2) p {
+			background: #D3F7FF;
+			color: #3FD4F4;
+		}
+
+		.pies_titles li:nth-child(3) p {
+			background: #FFEFD7;
+			color: #FFB240;
+		}
+		/* 超期数据 */
+		.cq .pair_name {
+			padding: 25px 0 25px 15px;
+		}
+		.cq-table_contain {
+			height: 320px;
+			padding: 0 15px;
+		}
+		.cq-table_contain .layui-table {
+			color: #333;
+			border-collapse: collapse;
+		}
+		
+		.cq-table_contain .layui-table thead  tr {
+			background: #fff;
+			color: #9BB1C8;
+			/* height: 40px; */
+		}
+		.cq-table_contain .layui-table tbody  tr{
+			background: #F2F7FF;
+			border-bottom: 20px solid #fff;
+			/* height: 70px; */
+		}
+		
+		.cq-table_contain .layui-table tbody  tr:first-child {
+			background: #FFF3F3;
+		}
+		.cq-table_contain .layui-table tbody  tr:first-child td:first-child {
+			background: url(./img/warn_1.png) no-repeat center center;
+			color: transparent;
+		}
+		.cq-table_contain .layui-table tbody  tr:nth-child(2) {
+			background: #FDF2EF;
+		}
+		.cq-table_contain .layui-table tbody  tr:nth-child(2) td:first-child {
+			background: url(./img/warn_2.png) no-repeat center center;
+			color: transparent;
+		}
+		.cq-table_contain .layui-table tbody  tr:nth-child(3) {
+			background: #FDF6EE;
+		}
+		.cq-table_contain .layui-table tbody  tr:nth-child(3) td:first-child {
+			background: url(./img/warn_3.png) no-repeat center center;
+			color: transparent;
+		}
+		.cq-table_contain .layui-table tbody  tr:last-child {
+			border-bottom: 0;
+			/* height: 50px; */
+		}
+		
+		.cq-table_contain .layui-table td {
+			text-align: center;
+			height: 50px;
+			line-height: 50px;
+			padding: 0 15px;
+		}
+		
+		/* 未\已出库 */
+		.wck .pair_name, .yck .pair_name{
+			padding: 22px 0 10px 15px;
+		}
+		.wck .pair,.yck .pair {
+			padding: 0 0 4px 15px;
+			font-size: 14px;
+		}
+		.wck .pair strong,.yck .pair strong {
+			font-size: 28px;
+		}
+		
 	</style>
 
-
-	<!-- <script src="dist/extension/dataTool.js"></script> -->
 	<body class="layui-fluid">
 		<header>
 			<form class="layui-form" action="">
@@ -167,7 +295,7 @@
 							</select>
 						</div>
 					</div>
-					<div class="layui-inline">
+					<div class="layui-inline pull-right">
 						<button type="reset" class="layui-btn" lay-filter="form">重置</button>
 						<button type="submit" class="layui-btn" lay-submit="" lay-filter="form">页面导出</button>
 					</div>
@@ -243,20 +371,29 @@
 					<div class="layui-card">
 						<div class="layui-card-body">
 							<h4>出入库数据</h4>
-							<div id="pies" style="width: 100%;height:300px;"></div>
+							<div id="pies" style="width: 100%;height:230px;"></div>
+							<ul class="pies_titles">
+								<li>
+									<p>出库率</p>
+								</li>
+								<li>
+									<p>未出库率</p>
+								</li>
+								<li>
+									<p>退出率</p>
+								</li>
+							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
-
-
 			<div class="rows">
 				<div class="col-5">
 					<div class="col-card">
 						<div class="layui-card-body">
 							<div class="layui-row">
 								<div class="layui-col-md4">
-									<div class="pair-img"><img src="./img/crk_2.png" /></div>
+									<div class="pair-img"><img src="./img/crk_ylx.png" /></div>
 								</div>
 								<div class="layui-col-md8">
 									<p class="pair_name">已立项项目</p>
@@ -268,30 +405,71 @@
 				</div>
 				<div class="col-5">
 					<div class="col-card">
-						拿地项目
+						<div class="layui-card-body">
+							<div class="layui-row">
+								<div class="layui-col-md4">
+									<div class="pair-img"><img src="./img/crk_nd.png" /></div>
+								</div>
+								<div class="layui-col-md8">
+									<p class="pair_name">拿地项目</p>
+									<p class="pair"> <strong>62</strong><span>（个）<span></p>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="col-5">
 					<div class="col-card">
-						完成规划
+
+						<div class="layui-card-body">
+							<div class="layui-row">
+								<div class="layui-col-md4">
+									<div class="pair-img"><img src="./img/crk_wcgh.png" /></div>
+								</div>
+								<div class="layui-col-md8">
+									<p class="pair_name">完成规划</p>
+									<p class="pair"> <strong>62</strong><span>（个）<span></p>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="col-5">
 					<div class="col-card">
-						完成审图
+						<div class="layui-card-body">
+							<div class="layui-row">
+								<div class="layui-col-md4">
+									<div class="pair-img"><img src="./img/crk_wcst.png" /></div>
+								</div>
+								<div class="layui-col-md8">
+									<p class="pair_name">完成审图</p>
+									<p class="pair"> <strong>62</strong><span>（个）<span></p>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="col-5">
 					<div class="col-card">
-						完成施工许可
+						<div class="layui-card-body">
+							<div class="layui-row">
+								<div class="layui-col-md4">
+									<div class="pair-img"><img src="./img/crk_wcsgxk.png" /></div>
+								</div>
+								<div class="layui-col-md8">
+									<p class="pair_name">完成施工许可</p>
+									<p class="pair"> <strong>62</strong><span>（个）<span></p>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="z-pannel">
+		<div class="z-pannel cq">
 			<h2>超期数据分析</h2>
-			<div class="layui-row layui-col-space15">
+			<div class="layui-row layui-col-space30">
 				<div class="layui-col-md4">
 					<div class="layui-card">
 						<div class="layui-card-body">
@@ -323,50 +501,122 @@
 				<div class="layui-col-md8">
 					<div class="layui-card">
 						<div class="layui-card-body">
-							超期项目清单
+							<h4>超期项目清单</h4>
+							<div class="cq-table_contain" >
+								<table class="layui-table" lay-skin="nob">
+									<thead>
+										<tr>
+											<td>预警</td>
+											<td>项目名称</td>
+											<td>超期时长</td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td>苏州新区污水处理厂迁建和综合改造工程</td>
+											<td>24（自然日）</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>苏州新区污水处理厂迁建和综合改造工程</td>
+											<td>24（自然日）</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>苏州新区污水处理厂迁建和综合改造工程</td>
+											<td>24（自然日）</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>苏州新区污水处理厂迁建和综合改造工程</td>
+											<td>24（自然日）</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="z-pannel">
+		<div class="z-pannel wck">
 			<h2>未出库项目</h2>
 			<div class="layui-row layui-col-space30">
 				<div class="layui-col-md3">
 					<div class="layui-card">
 						<div class="layui-card-body">
-							未出库项目数
+							<div class="layui-row">
+								<div class="layui-col-md3">
+									<div class="pair-img"><img src="./img/img_wck.png" /></div>
+								</div>
+								<div class="layui-col-md9">
+									<p class="pair_name">未出库项目数</p>
+									<p class="pair"> <strong>62</strong><span>（个）<span></p>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 				<div class="layui-col-md3">
 					<div class="layui-card">
 						<div class="layui-card-body">
-							最长入库用时
+
+							<div class="layui-row">
+								<div class="layui-col-md3">
+									<div class="pair-img"><img src="./img/img_time.png" /></div>
+								</div>
+								<div class="layui-col-md9">
+									<p class="pair_name">最长入库用时</p>
+									<p class="pair"> <strong>62</strong><span>（个）<span></p>
+								</div>
+							</div>
+
 						</div>
 					</div>
 				</div>
 				<div class="layui-col-md3">
 					<div class="layui-card">
 						<div class="layui-card-body">
-							最短入库用时
+
+							<div class="layui-row">
+								<div class="layui-col-md3">
+									<div class="pair-img"><img src="./img/img_lightning.png" /></div>
+								</div>
+								<div class="layui-col-md9">
+
+									<p class="pair_name">最短入库用时</p>
+									<p class="pair"> <strong>62</strong><span>（个）<span></p>
+								</div>
+							</div>
+
 						</div>
 					</div>
 				</div>
 				<div class="layui-col-md3">
 					<div class="layui-card">
 						<div class="layui-card-body">
-							未出库项目入库平均用时
+
+							<div class="layui-row">
+								<div class="layui-col-md3">
+									<div class="pair-img"><img src="./img/img_average.png" /></div>
+								</div>
+								<div class="layui-col-md9">
+									<p class="pair_name">未出库项目入库平均用时</p>
+									<p class="pair"> <strong>62</strong><span>（个）<span></p>
+								</div>
+							</div>
+
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="layui-row layui-col-space15">
+			<div class="layui-row layui-col-space30">
 				<div class="layui-col-md8">
 					<div class="layui-card">
 						<div class="layui-card-body">
-							入库时间项目数<span>（个）</span>
+							<h4>入库时间项目数<span>（个）</span></h4>
 							<div id="line" style="width: 100%;height:400px;"></div>
 						</div>
 					</div>
@@ -374,7 +624,7 @@
 				<div class="layui-col-md4">
 					<div class="layui-card">
 						<div class="layui-card-body">
-							入库时间占比
+							<h4>入库时间占比</h4>
 							<div id="pie4" style="width: 100%;height:400px;"></div>
 						</div>
 					</div>
@@ -382,44 +632,77 @@
 			</div>
 		</div>
 
-		<div class="z-pannel">
+		<div class="z-pannel yck">
 			<h2>已出库项目</h2>
 			<div class="layui-row layui-col-space30">
 				<div class="layui-col-md3">
 					<div class="layui-card">
 						<div class="layui-card-body">
-							已出库项目数
+							<div class="layui-row">
+								<div class="layui-col-md3">
+									<div class="pair-img"><img src="./img/img_yck.png" /></div>
+								</div>
+								<div class="layui-col-md9">
+									<p class="pair_name">已出库项目数</p>
+									<p class="pair"> <strong>62</strong><span>（个）<span></p>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 				<div class="layui-col-md3">
 					<div class="layui-card">
 						<div class="layui-card-body">
-							最短出库用时
+							<div class="layui-row">
+								<div class="layui-col-md3">
+									<div class="pair-img"><img src="./img/img_lightning.png" /></div>
+								</div>
+								<div class="layui-col-md9">
+									<p class="pair_name">最短出库用时</p>
+									<p class="pair"> <strong>62</strong><span>（个）<span></p>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 				<div class="layui-col-md3">
 					<div class="layui-card">
 						<div class="layui-card-body">
-							最长出库用时
+							<div class="layui-row">
+								<div class="layui-col-md3">
+									<div class="pair-img"><img src="./img/img_time.png" /></div>
+								</div>
+								<div class="layui-col-md9">
+									<p class="pair_name">最长出库用时</p>
+									<p class="pair"> <strong>62</strong><span>（个）<span></p>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 				<div class="layui-col-md3">
 					<div class="layui-card">
 						<div class="layui-card-body">
-							出库项目入库至出库平均用时
+
+							<div class="layui-row">
+								<div class="layui-col-md3">
+									<div class="pair-img"><img src="./img/img_average.png" /></div>
+								</div>
+								<div class="layui-col-md9">
+									<p class="pair_name">出库项目入库至出库平均用时</p>
+									<p class="pair"> <strong>62</strong><span>（个）<span></p>
+								</div>
+							</div>
 
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="layui-row layui-col-space15">
+			<div class="layui-row layui-col-space30">
 				<div class="layui-col-md8">
 					<div class="layui-card">
 						<div class="layui-card-body">
-							入库至出库用时项目数<span>（个）</span>
+							<h4>入库至出库用时项目数<span>（个）</span></h4>
 							<div id="bar1" style="width: 100%;height:400px;"></div>
 						</div>
 					</div>
@@ -427,40 +710,65 @@
 				<div class="layui-col-md4">
 					<div class="layui-card">
 						<div class="layui-card-body">
-							入库至出库用时占比
+							<h4>入库至出库用时占比</h4>
 							<div id="pie5" style="width: 100%;height:400px;"></div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="layui-row layui-col-space15">
+			<div class="layui-row layui-col-space30">
 				<div class="layui-col-md4">
 					<div class="layui-card">
 						<div class="layui-card-body">
-							最短全流程审批用时
+							<div class="layui-row">
+								<div class="layui-col-md3">
+									<div class="pair-img"><img src="./img/yck_lightning.png" /></div>
+								</div>
+								<div class="layui-col-md9">
+									<p class="pair_name">最短全流程审批用时</p>
+									<p class="pair"> <strong>62</strong><span>（月）<span></p>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 				<div class="layui-col-md4">
 					<div class="layui-card">
 						<div class="layui-card-body">
-							最长全流程审批用时
+							<div class="layui-row">
+								<div class="layui-col-md3">
+									<div class="pair-img"><img src="./img/yck_time.png" /></div>
+								</div>
+								<div class="layui-col-md9">
+									<p class="pair_name">最长全流程审批用时</p>
+									<p class="pair"> <strong>62</strong><span>（月）<span></p>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 				<div class="layui-col-md4">
 					<div class="layui-card">
 						<div class="layui-card-body">
-							已出库项目全流程审批平均用时
+
+							<div class="layui-row">
+								<div class="layui-col-md3">
+									<div class="pair-img"><img src="./img/img_average.png" /></div>
+								</div>
+								<div class="layui-col-md9">
+									<p class="pair_name">已出库项目全流程审批平均用时</p>
+									<p class="pair"> <strong>62</strong><span>（月）<span></p>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="layui-row layui-col-space15">
+			<div class="layui-row layui-col-space30">
 				<div class="layui-col-md8">
 					<div class="layui-card">
 						<div class="layui-card-body">
-							全流程审批用时项目数<span>（个）</span>
+							<h4>全流程审批用时项目数<span>（个）</span></h4>
 							<div id="bar2" style="width: 100%;height:400px;"></div>
 						</div>
 					</div>
@@ -468,7 +776,7 @@
 				<div class="layui-col-md4">
 					<div class="layui-card">
 						<div class="layui-card-body">
-							全流程审批用时占比
+							<h4>全流程审批用时占比</h4>
 							<div id="pie6" style="width: 100%;height:400px;"></div>
 						</div>
 					</div>
@@ -477,14 +785,10 @@
 		</div>
 
 
-		<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-		<!--  <div id="main" style="width: 1024px;height:768px;"></div> -->
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.min.js"></script>
 		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 		<script src="http://layui.itmtr.cn/layui/dist/layui.js"></script>
-		<!-- <script src="http://layui.itmtr.cn/layui/release/layer/dist/layer.js?v=351-1"></script> -->
-		<!-- <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.3/dist/echarts.js"></script> -->
 		<script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/echarts/5.3.0/echarts.js"></script>
 		<script src="js/overview.js"></script>
 		<script type="text/javascript">
@@ -518,10 +822,7 @@
 			myChartLine.setOption(line);
 
 
-			// // 基于准备好的dom，初始化echarts实例
-			// var myChart5 = echarts.init(document.getElementById('pie5'));
-			// var myChart5 = echarts.init(document.getElementById('pie5'));
-			// var myChart5 = echarts.init(document.getElementById('pie5'));
+			//基于准备好的dom，初始化echarts实例
 			var myChart4 = echarts.init(document.getElementById('pie4'));
 			var myChart5 = echarts.init(document.getElementById('pie5'));
 			var myChart6 = echarts.init(document.getElementById('pie6'));

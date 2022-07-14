@@ -158,7 +158,7 @@ let bar = {
 };
 
 // 线形图
-let lineData = [820, 932, 901, 934, 1290, 1330, 1320];
+let lineData = [820, 932, 400, 934, 1290, 1330, 1320];
 let line = {
 	tooltip: {
 		trigger: 'item',
@@ -201,6 +201,7 @@ let line = {
 	}, ],
 	series: [{
 		type: 'line',
+		name:'入库用时',
 		data: lineData,
 		smooth: true,
 		symbol: "circle",
@@ -237,35 +238,14 @@ let line = {
 let piesColors = ['#5383FF', '#3FD4F4', '#FFBE5E'];
 
 
-var piesData = {
-	value: 24.2,
-	text: "-",
-	names: ["出库率", "未出库率", "退出率"],
-	values: ["76", "78", "22"],
-};
+var piesData = ["76", "78", "22"];
 
 var seriesData = [];
 var titleData = [];
-piesData.values.forEach(function(item, index) {
-	titleData.push({
-		text: piesData.names[index],
-		left: 30 * index +10 + "%",
-		top: "80%",
-		textAlign: "cnter",
-		backgroundColor: piesColors[index] + '44',
-		padding: [5, 20],
-		borderRadius: 20,
-		textStyle: {
-			fontSize: "18",
-			lineHeight:'18',
-			color: piesColors[index],
-			fontWeight: "400",
-			width:"30%",
-		},
-	});
+piesData.forEach(function(item, index) {
 	seriesData.push({
 		type: "pie",
-		radius: ["65", "74"],
+		radius: ["65", "78"],
 		center: [30 * (index + 1) - 10 + "%", "50%"],
 		label: {
 			position: "center",
@@ -276,7 +256,7 @@ piesData.values.forEach(function(item, index) {
 		},
 		data: [{
 				value: item,
-				name: piesData.names[index],
+				// name: piesData.names[index],
 				itemStyle: {
 					borderRadius: 10,
 					color: piesColors[index],
@@ -320,9 +300,12 @@ piesData.values.forEach(function(item, index) {
 	});
 });
 
-let value = piesData.value || 0;
+// let value = piesData.value || 0;
 let pies = {
 	id: 'pies',
-	title: titleData,
+	// title: titleData,
+	grid:{
+		top:10
+	},
 	series: seriesData,
 };

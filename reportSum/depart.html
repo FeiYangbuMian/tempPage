@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>审批部门</title>
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/layui/2.6.5/css/layui.css">
+	</head>
+	<style>
+		label {
+			box-sizing: content-box;
+			color: #fff;
+		}
+
+		body {
+			background: #fff;
+			color: #333;
+			padding: 30px;
+		}
+		/* 滚动条整体宽度 */
+		::-webkit-scrollbar {
+			width: 6px;
+			height: 6px;
+		}
+		
+		/*  滚动条滑槽样式 */
+		::-webkit-scrollbar-track {
+			-webkit-box-shadow: inset 0 0 6px rgba(51, 51, 51, 0.116);
+			border-radius: 4px;
+		}
+		
+		/*  滚动条样式 */
+		::-webkit-scrollbar-thumb {
+			border-radius: 8px;
+			background: rgba(61, 60, 60, 0.4);
+			/* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5); */
+		}
+		
+		::-webkit-scrollbar-thumb:hover {
+			background: #c4d3f1;
+		}
+		
+		::-webkit-scrollbar-thumb:active {
+			background: #c4d3f1;
+		}
+		
+		/* // 浏览器失焦的样式 */
+		::-webkit-scrollbar-thumb:window-inactive {
+			background: rgba(61, 60, 60, 0.4);
+		}
+
+		header {
+			background: url(./img/bg-header.png) no-repeat left bottom /100% 100%;
+			/* color: #fff; */
+			height: 106px;
+			line-height: 106px;
+			margin-bottom: 30px;
+			padding: 0 30px 0 10px;
+		}
+
+		input {
+			color: #fff;
+		}
+
+		input::-webkit-input-placeholder {
+			color: #fffd;
+		}
+
+		.layui-form .layui-form-item,
+		.layui-form-item .layui-inline,
+		.layui-form-label {
+			margin: 0;
+		}
+
+		.layui-form-select dl dd.layui-this {
+			background-color: #5383FF;
+		}
+
+		.layui-btn {
+			background-color: #fff;
+			color: #245FE6;
+			border-radius: 10px;
+		}
+
+		.layui-btn:hover {
+			color: #245FE6;
+		}
+
+		header .layui-input,
+		header .layui-select,
+		header .layui-textarea {
+			background: #fff4 !important;
+		}
+
+		.z-pannel {
+			border-radius: 10px;
+			background: #F2F7FF;
+			padding: 15px 30px 30px;
+			margin-bottom: 30px;
+			color: #9BB1C8;
+			font-size: 18px;
+		}
+
+		.z-pannel .layui-card {
+			margin-bottom: 30px;
+		}
+
+		h2 {
+			color: #333;
+			font-size: 24px;
+			text-align: center;
+			background: url(./img/bg-title-l.png) no-repeat center left, url(./img/bg-title-r.png) no-repeat center right;
+			margin: 15px 0;
+			font-weight: bold;
+		}
+
+		h4 {
+			line-height: 50px;
+			padding: 0 0 0 15px;
+			margin: 0;
+			color: #333333;
+			font-size: 18px;
+			font-weight: bold;
+		}
+		
+		/* 表格 */
+		
+		.layui-table {
+			color: #333;
+			text-align: center;
+		}
+		.layui-table thead tr {
+			background-color: #DEE8FF;
+		}
+		.layui-table thead th {
+			border-color: #DEE8FF;
+			text-align: center;
+			color: #043D75;
+			font-size: 16px;
+			padding: 14px 15px;
+		}
+		.layui-table[lay-even] tr:nth-child(even) {
+			background-color:#F2F7FF;
+		}
+		.layui-table tbody td {
+			border-color: #DAE8FF;
+			font-size: 16px;
+			padding: 14px 15px;
+		}
+		/* 动态表格 */
+		.layui-table-header,.layui-table-view {
+			border-color: #DEE8FF;
+		}
+		.layui-table-sort .layui-table-sort-asc {
+			border-bottom-color: #245FE6;
+		}
+		.layui-table-sort .layui-table-sort-desc {
+			border-top-color: #245FE6;
+		}
+		.layui-table-sort[lay-sort=asc] .layui-table-sort-asc {
+			border-bottom-color:#FF7048;
+		}
+		.layui-table-sort[lay-sort=desc] .layui-table-sort-desc {
+			border-top-color: #FF7048;
+		}
+		
+		/* 热点咨-询事项TOP10 */
+		.rd-thead_contain {
+			padding: 0 15px;
+		}
+		.rd-thead_contain .layui-table thead  tr {
+			background: #fff;
+			color: #9BB1C8;
+		}
+		.rd-table_contain {
+			height: 450px;
+			padding: 0 15px 0;
+			margin-bottom: 12px;
+			overflow-x: hidden;
+			overflow-y: auto;
+		}
+		.rd-table_contain .layui-table {
+			color: #333;
+			border-collapse: collapse;
+		}
+		
+		.rd-table_contain .layui-table tbody  tr{
+			background: #F2F7FF;
+			border-bottom: 20px solid #fff;
+			/* height: 70px; */
+		}
+		.rd-table_contain .layui-table tbody  tr:first-child {
+			background: #FFF3F3;
+		}
+		.rd-table_contain .layui-table tbody  tr:first-child td:first-child {
+			background: url(./img/top_1.png) no-repeat center center;
+			color: transparent;
+		}
+		.rd-table_contain .layui-table tbody  tr:nth-child(2) {
+			background: #FDF2EF;
+		}
+		.rd-table_contain .layui-table tbody  tr:nth-child(2) td:first-child {
+			background: url(./img/top_2.png) no-repeat center center;
+			color: transparent;
+		}
+		.rd-table_contain .layui-table tbody  tr:nth-child(3) {
+			background: #FDF6EE;
+		}
+		.rd-table_contain .layui-table tbody  tr:nth-child(3) td:first-child {
+			background: url(./img/top_3.png) no-repeat center center;
+			color: transparent;
+		}
+		.rd-table_contain .layui-table tbody  tr:last-child {
+			border-bottom: 0;
+			/* height: 50px; */
+		}
+		.rd-table_contain .layui-table td {
+			text-align: center;
+			height: 50px;
+			line-height: 50px;
+			padding: 0 15px;
+		}
+	</style>
+	<body>
+		<header>
+			<form class="layui-form" action="">
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">年份选择：</label>
+						<div class="layui-input-inline">
+							<select name="projectlevel">
+								<option value="">请选择</option>
+								<option value="1">layer</option>
+								<option value="2">form</option>
+								<option value="3">layim</option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-inline pull-right">
+						<button type="submit" class="layui-btn" lay-submit="" lay-filter="form">页面导出</button>
+					</div>
+					<div class="back">
+						<div class="back-content" @click="goBack"></div>
+					</div>
+				</div>
+			</form>
+		</header>
+
+		<div class="z-pannel">
+			<h2>审批部门服务成效</h2>
+
+			<div class="layui-card">
+				<div class="layui-card-body">
+					<h4>工改审批服务成效</h4>
+					<table lay-filter="demo">
+						<thead>
+							<tr>
+								<th lay-data="{field:'username', width:100}">审批部门</th>
+								<th lay-data="{field:'experience', width:180, sort:true}">审批事项数</th>
+								<th lay-data="{field:'sign',sort:true}">已完成入库项目事项审批总量</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>贤心</td>
+								<td>1</td>
+								<td>贤心</td>
+							</tr>
+							<tr>
+								<td>贤心</td>
+								<td>4</td>
+								<td>贤心</td>
+							</tr>
+							<tr>
+								<td>贤心</td>
+								<td>2</td>
+								<td>贤心</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div class="z-pannel">
+			<h2>审批部门服务成效</h2>
+
+			<div class="layui-card">
+				<div class="layui-card-body">
+					<h4>工改审批服务成效</h4>
+					<table class="layui-table" lay-even>
+						<thead>
+							<tr>
+								<th>审批部门</th>
+								<th>审批事项数</th>
+								<th>已完成入库项目事项审批总量</th>
+								<th>已回复项目咨询总量</th>
+								<th>平台登录总次数</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>贤心</td>
+								<td>贤心</td>
+								<td>贤心</td>
+								<td>贤心</td>
+								<td>贤心</td>
+							</tr>
+							<tr>
+								<td>贤心</td>
+								<td>贤心</td>
+								<td>贤心</td>
+								<td>贤心</td>
+								<td>贤心</td>
+							</tr>
+							<tr>
+								<td>贤心</td>
+								<td>贤心</td>
+								<td>贤心</td>
+								<td>贤心</td>
+								<td>贤心</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="z-pannel">
+			<h2>热点咨询分析</h2>
+			
+			<div class="layui-row layui-col-space30">
+				<div class="layui-col-md6">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							<h4>各部门咨询回复数据分析</h4>
+							<div id="bar" style="width: 100%;height:510px;"></div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md6">
+					<div class="layui-card">
+						<div class="layui-card-body">
+							<h4>热点咨询事项TOP10</h4>
+							<div class="rd-thead_contain" >
+								<table class="layui-table" lay-skin="nob">
+									<colgroup>
+									   <col width="80">
+									   <col>
+									   <col width="150">
+									 </colgroup>
+									<thead>
+										<tr>
+											<td>排名</td>
+											<td>事项名称</td>
+											<td>审批部门</td>
+										</tr>
+									</thead>
+								</table>
+							</div>
+							<div class="rd-table_contain" >
+								<table class="layui-table" lay-skin="nob">
+									 <colgroup>
+									    <col width="80">
+									    <col>
+									    <col width="150">
+									  </colgroup>
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td>苏州新区污水处理厂迁建和综合改造工程</td>
+											<td>经发委</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>苏州新区污水处理厂迁建和综合改造工程</td>
+											<td>经发委</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>苏州新区污水处理厂迁建和综合改造工程</td>
+											<td>经发委</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>苏州新区污水处理厂迁建和综合改造工程</td>
+											<td>经发委</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>苏州新区污水处理厂迁建和综合改造工程</td>
+											<td>经发委</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>苏州新区污水处理厂迁建和综合改造工程</td>
+											<td>经发委</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>苏州新区污水处理厂迁建和综合改造工程</td>
+											<td>经发委</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+
+
+
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.min.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+		<script src="http://layui.itmtr.cn/layui/dist/layui.js"></script>
+		<script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/echarts/5.3.0/echarts.js"></script>
+		<script src="./js/depart.js"></script>
+		<script type="text/javascript">
+			
+			
+			var myChartBar = echarts.init(document.getElementById('bar'));
+			myChartBar.setOption(bar);
+			
+			var table = layui.table;
+			 
+			//转换静态表格
+			table.init('demo', {
+			  height: 315, //设置高度
+			  limit: 10, //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致
+			  //支持所有基础参数
+				even:true
+				
+			});
+			
+			
+		</script>
+	</body>
+</html>
