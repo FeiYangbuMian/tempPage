@@ -1,8 +1,8 @@
 // 柱状图
 var legends = ['经发委', '住建局', '城管局', '城乡发展局', '商务局', '文体旅局', '应急管理局'];
 var barColors = ['#FDAEE7', '#245FE6'];
-var barData = [101, 90, 10, 90, 90, 20, 56, 89];
-var barData1 = [41, 30, 40, 50, 20, 80, 76, 69];
+var barData = [101, 90, 10, 90, 90, 20, 56];
+var barData1 = [41, 30, 40, 50, 20, 80, 76];
 
 var bar = {
 	grid: {
@@ -110,10 +110,11 @@ var bar = {
 			symbol: 'rect',
 			symbolSize: [2, 15],
 			symbolOffset: [0, '50%'],
-			symbolRepeat: 'fixed',
+			symbolRepeat: true,
 			symbolRotate: '-30',
 			symbolMargin: 2,
 			symbolClip: true,
+			barMinHeight:1,
 			data: barData1,
 		}
 	],

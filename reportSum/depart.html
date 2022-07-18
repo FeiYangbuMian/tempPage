@@ -51,7 +51,6 @@
 
 		header {
 			background: url(./img/bg-header.png) no-repeat left bottom /100% 100%;
-			/* color: #fff; */
 			height: 106px;
 			line-height: 106px;
 			margin-bottom: 30px;
@@ -76,10 +75,20 @@
 			background-color: #5383FF;
 		}
 
-		.layui-btn {
+		header .layui-btn {
 			background-color: #fff;
 			color: #245FE6;
 			border-radius: 10px;
+			height: 46px;
+			line-height: 46px;
+			font-size: 16px;
+			padding: 0 24px;
+		}
+		header .layui-btn  img {
+			margin-right: 10px;
+		}
+		.layui-btn+.layui-btn {
+			margin-left: 20px;
 		}
 
 		.layui-btn:hover {
@@ -91,7 +100,7 @@
 		header .layui-textarea {
 			background: #fff4 !important;
 		}
-
+		
 		.z-pannel {
 			border-radius: 10px;
 			background: #F2F7FF;
@@ -124,7 +133,6 @@
 		}
 		
 		/* 表格 */
-		
 		.layui-table {
 			color: #333;
 			text-align: center;
@@ -158,10 +166,16 @@
 			border-top-color: #245FE6;
 		}
 		.layui-table-sort[lay-sort=asc] .layui-table-sort-asc {
-			border-bottom-color:#FF7048;
+			border-bottom-color:#fff;
+		}
+		.layui-table-sort[lay-sort=asc] .layui-table-sort-desc {
+			border-top-color: #b2b2b2;
 		}
 		.layui-table-sort[lay-sort=desc] .layui-table-sort-desc {
-			border-top-color: #FF7048;
+			border-top-color: #fff;
+		}
+		.layui-table-sort[lay-sort=desc] .layui-table-sort-asc {
+			border-bottom-color:#b2b2b2;
 		}
 		
 		/* 热点咨-询事项TOP10 */
@@ -187,7 +201,6 @@
 		.rd-table_contain .layui-table tbody  tr{
 			background: #F2F7FF;
 			border-bottom: 20px solid #fff;
-			/* height: 70px; */
 		}
 		.rd-table_contain .layui-table tbody  tr:first-child {
 			background: #FFF3F3;
@@ -212,7 +225,6 @@
 		}
 		.rd-table_contain .layui-table tbody  tr:last-child {
 			border-bottom: 0;
-			/* height: 50px; */
 		}
 		.rd-table_contain .layui-table td {
 			text-align: center;
@@ -223,7 +235,7 @@
 	</style>
 	<body>
 		<header>
-			<form class="layui-form" action="">
+			<form class="layui-form">
 				<div class="layui-form-item">
 					<div class="layui-inline">
 						<label class="layui-form-label">年份选择：</label>
@@ -237,7 +249,7 @@
 						</div>
 					</div>
 					<div class="layui-inline pull-right">
-						<button type="submit" class="layui-btn" lay-submit="" lay-filter="form">页面导出</button>
+						<button type="button" class="layui-btn" ><img src="img/btn_output.png"/> 页面导出</button>
 					</div>
 					<div class="back">
 						<div class="back-content" @click="goBack"></div>
@@ -409,11 +421,7 @@
 					</div>
 				</div>
 			</div>
-			
 		</div>
-
-
-
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.min.js"></script>
 		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
@@ -422,21 +430,31 @@
 		<script src="./js/depart.js"></script>
 		<script type="text/javascript">
 			
-			
 			var myChartBar = echarts.init(document.getElementById('bar'));
+			// 接口回调里 赋值 。数据需要转为下方这样的格式
+			bar.series[0].data = [65, 90, 10, 90, 90, 20, 56]; // 咨询总数
+			bar.series[1].data = [65, 90, 10, 90, 90, 20, 56]; // 及时回复数
+			bar.series[2].data = [65, 90, 10, 90, 90, 20, 56]; // 及时回复数
 			myChartBar.setOption(bar);
 			
+			// 转换静态表格，模拟动态表格 可以直接 table.render()渲染数据
 			var table = layui.table;
-			 
-			//转换静态表格
 			table.init('demo', {
 			  height: 315, //设置高度
 			  limit: 10, //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致
-			  //支持所有基础参数
 				even:true
-				
 			});
 			
+			// 动态表格排序时th高亮，td暂时没找到方法
+			table.on('sort(demo)', function(obj){ 
+				if(obj.type) {
+					this.css('color','#fff')
+					this.css('background','#FF7048')
+				} else {
+					this.css('color','#043D75')
+					this.css('background','inherit')
+				}
+			});
 			
 		</script>
 	</body>

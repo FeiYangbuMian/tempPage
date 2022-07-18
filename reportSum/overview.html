@@ -8,6 +8,37 @@
 	</head>
 	<style>
 		/* 可共用样式 */
+		/* 滚动条整体宽度 */
+		::-webkit-scrollbar {
+			width: 6px;
+			height: 6px;
+		}
+		
+		/*  滚动条滑槽样式 */
+		::-webkit-scrollbar-track {
+			-webkit-box-shadow: inset 0 0 6px rgba(51, 51, 51, 0.116);
+			border-radius: 4px;
+		}
+		
+		/*  滚动条样式 */
+		::-webkit-scrollbar-thumb {
+			border-radius: 8px;
+			background: rgba(61, 60, 60, 0.4);
+			/* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5); */
+		}
+		
+		::-webkit-scrollbar-thumb:hover {
+			background: #c4d3f1;
+		}
+		
+		::-webkit-scrollbar-thumb:active {
+			background: #c4d3f1;
+		}
+		
+		/* // 浏览器失焦的样式 */
+		::-webkit-scrollbar-thumb:window-inactive {
+			background: rgba(61, 60, 60, 0.4);
+		}
 		label {
 			box-sizing: content-box;
 			color: #fff;
@@ -27,9 +58,11 @@
 			margin-bottom: 30px;
 			padding: 0 30px 0 10px;
 		}
+
 		input {
 			color: #fff;
 		}
+
 		input::-webkit-input-placeholder {
 			color: #fffd;
 		}
@@ -39,14 +72,27 @@
 		.layui-form-label {
 			margin: 0;
 		}
+
 		.layui-form-select dl dd.layui-this {
 			background-color: #5383FF;
 		}
 
-		.layui-btn {
+		header .layui-btn {
 			background-color: #fff;
 			color: #245FE6;
 			border-radius: 10px;
+			height: 46px;
+			line-height: 46px;
+			font-size: 16px;
+			padding: 0 24px;
+		}
+
+		header .layui-btn img {
+			margin-right: 10px;
+		}
+
+		.layui-btn+.layui-btn {
+			margin-left: 20px;
 		}
 
 		.layui-btn:hover {
@@ -78,6 +124,9 @@
 		.pair_name {
 			line-height: 30px;
 			padding: 15px 0 15px 15px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
 
 		.pair {
@@ -192,30 +241,37 @@
 			background: #FFEFD7;
 			color: #FFB240;
 		}
+
 		/* 超期数据 */
 		.cq .pair_name {
 			padding: 25px 0 25px 15px;
 		}
-		.cq-table_contain {
-			height: 320px;
+
+		.cq-thead_contain {
 			padding: 0 15px;
+		}
+		.cq-thead_contain .layui-table thead  tr {
+			background: #fff;
+			color: #9BB1C8;
+			text-align: center;
+		}
+		.cq-table_contain {
+			height: 260px;
+			padding: 0 15px 0;
+			margin-bottom: 12px;
+			overflow-x: hidden;
+			overflow-y: auto;
+			color: #333;
 		}
 		.cq-table_contain .layui-table {
 			color: #333;
 			border-collapse: collapse;
 		}
 		
-		.cq-table_contain .layui-table thead  tr {
-			background: #fff;
-			color: #9BB1C8;
-			/* height: 40px; */
-		}
 		.cq-table_contain .layui-table tbody  tr{
 			background: #F2F7FF;
 			border-bottom: 20px solid #fff;
-			/* height: 70px; */
 		}
-		
 		.cq-table_contain .layui-table tbody  tr:first-child {
 			background: #FFF3F3;
 		}
@@ -239,28 +295,30 @@
 		}
 		.cq-table_contain .layui-table tbody  tr:last-child {
 			border-bottom: 0;
-			/* height: 50px; */
 		}
-		
 		.cq-table_contain .layui-table td {
 			text-align: center;
 			height: 50px;
 			line-height: 50px;
 			padding: 0 15px;
 		}
-		
+
 		/* 未\已出库 */
-		.wck .pair_name, .yck .pair_name{
+		.wck .pair_name,
+		.yck .pair_name {
 			padding: 22px 0 10px 15px;
 		}
-		.wck .pair,.yck .pair {
+
+		.wck .pair,
+		.yck .pair {
 			padding: 0 0 4px 15px;
 			font-size: 14px;
 		}
-		.wck .pair strong,.yck .pair strong {
+
+		.wck .pair strong,
+		.yck .pair strong {
 			font-size: 28px;
 		}
-		
 	</style>
 
 	<body class="layui-fluid">
@@ -297,7 +355,8 @@
 					</div>
 					<div class="layui-inline pull-right">
 						<button type="reset" class="layui-btn" lay-filter="form">重置</button>
-						<button type="submit" class="layui-btn" lay-submit="" lay-filter="form">页面导出</button>
+						<button type="submit" class="layui-btn" lay-submit="" lay-filter="form"><img
+								src="img/btn_output.png" />页面导出</button>
 					</div>
 					<div class="back">
 						<div class="back-content" @click="goBack"></div>
@@ -502,8 +561,13 @@
 					<div class="layui-card">
 						<div class="layui-card-body">
 							<h4>超期项目清单</h4>
-							<div class="cq-table_contain" >
+							<div class="cq-thead_contain" >
 								<table class="layui-table" lay-skin="nob">
+									<colgroup>
+									   <col width="100">
+									   <col>
+									   <col width="150">
+									 </colgroup>
 									<thead>
 										<tr>
 											<td>预警</td>
@@ -511,6 +575,15 @@
 											<td>超期时长</td>
 										</tr>
 									</thead>
+								</table>
+							</div>
+							<div class="cq-table_contain" >
+								<table class="layui-table" lay-skin="nob">
+									<colgroup>
+									   <col width="100">
+									   <col>
+									   <col width="150">
+									 </colgroup>
 									<tbody>
 										<tr>
 											<td>1</td>
@@ -811,37 +884,128 @@
 				});
 			});
 
-
-
+			// 下方图表，在接口回调里写下面的，数据格式须一致
+			// 出入库数据，三张饼图，
 			var myChartPies = echarts.init(document.getElementById('pies'));
-			myChartPies.setOption(pies);
+			var piesData = ["76", "78", "22"]; // 出库率，未出库率，退出率（百分比
+			var seriesData = piesData.map((item, index) => fn(item, index));
+			var crkPies = {
+				grid: {
+					top: 10
+				},
+				series: seriesData,
+			};
+			myChartPies.setOption(crkPies);
 
-
-
+			// 入库时间项目数
 			var myChartLine = echarts.init(document.getElementById('line'));
+			line.series[0].data = [420, 932, 400, 934, 1290, 1330, 1320]; // 数据，对应['小于1月', '1-3月', '3-6月', '6-12月', '1-2年', '2年以上'];
 			myChartLine.setOption(line);
 
-
-			//基于准备好的dom，初始化echarts实例
+			// 入库时间占比
 			var myChart4 = echarts.init(document.getElementById('pie4'));
-			var myChart5 = echarts.init(document.getElementById('pie5'));
-			var myChart6 = echarts.init(document.getElementById('pie6'));
+			// 数据格式需要如下，因为涉及动态展示。下面两个pie同理。
+			pie.series[0].data = [{
+					value: 435,
+					name: "小于1月",
+				},
+				{
+					value: 679,
+					name: "1-3月"
+				},
+				{
+					value: 848,
+					name: "3-6月"
+				},
+				{
+					value: 348,
+					name: "6-12月"
+				},
+				{
+					value: 679,
+					name: "1-2年"
+				},
+				{
+					value: 848,
+					name: "2年以上"
+				},
+			]
 			myChart4.setOption(pie);
-			myChart5.setOption(pie);
-			myChart6.setOption(pie);
 
+			// 入库至出库用时占比
+			var myChart5 = echarts.init(document.getElementById('pie5'));
+			pie.series[0].data = [{
+					value: 435,
+					name: "小于1月",
+				},
+				{
+					value: 679,
+					name: "1-3月"
+				},
+				{
+					value: 848,
+					name: "3-6月"
+				},
+				{
+					value: 348,
+					name: "6-12月"
+				},
+				{
+					value: 679,
+					name: "1-2年"
+				},
+				{
+					value: 848,
+					name: "2年以上"
+				},
+			]
+			myChart5.setOption(pie);
+
+			// 全流程审批用时占比
+			var myChart6 = echarts.init(document.getElementById('pie6'));
+			pie.series[0].data = [{
+					value: 435,
+					name: "小于1月",
+				},
+				{
+					value: 679,
+					name: "1-3月"
+				},
+				{
+					value: 848,
+					name: "3-6月"
+				},
+				{
+					value: 348,
+					name: "6-12月"
+				},
+				{
+					value: 679,
+					name: "1-2年"
+				},
+				{
+					value: 848,
+					name: "2年以上"
+				},
+			]
+			myChart6.setOption(pie);
+			
+			// 入库至出库用时项目数
 			var myChartBar1 = echarts.init(document.getElementById('bar1'));
-			var myChartBar2 = echarts.init(document.getElementById('bar2'));
 			bar.tooltip.borderColor = barColors[0] + '66';
 			bar.color = barColors[0];
+			bar.series[0].data = [100, 90, 10, 90, 90, 20, 56, 89];  // 数据，对应['小于1月', '1-3月', '3-6月', '6-12月', '1-2年', '2年以上'];
 			myChartBar1.setOption(bar);
+			
+			
+			
+			// 全流程审批用时项目数
+			var myChartBar2 = echarts.init(document.getElementById('bar2'));
 			bar.tooltip.borderColor = barColors[1] + '66';
 			bar.color = barColors[1];
+			bar.series[0].data = [100, 90, 10, 90, 90, 20, 56, 89];  // 数据，对应['小于1月', '1-3月', '3-6月', '6-12月', '1-2年', '2年以上'];
 			myChartBar2.setOption(bar);
 		</script>
 
-
-		<!-- http://echarts.zhangmuchen.top/#/iframeDetail?cid=xKNY69ljr_  斜纹柱状图-->
-		<!-- https://blog.51cto.com/u_15294985/5144416  背景横条 -->
 	</body>
 </html>

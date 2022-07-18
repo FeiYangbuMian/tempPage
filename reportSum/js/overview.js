@@ -1,13 +1,13 @@
-let legends = ['小于1月', '1-3月', '3-6月', '6-12月', '1-2年', '2年以上'];
+var legends = ['小于1月', '1-3月', '3-6月', '6-12月', '1-2年', '2年以上'];
 // 饼状图
-let pieColors = ['#3CD494', '#BAEE6A', '#48C1F8', '#0075FF', '#FF9E4D', '#FD6B47'];
-let legendsData = legends.map(item => {
+var pieColors = ['#3CD494', '#BAEE6A', '#48C1F8', '#0075FF', '#FF9E4D', '#FD6B47'];
+var legendsData = legends.map(item => {
 	return {
 		name: item,
 		icon: 'circle'
 	}
 });
-let pieData = [{
+var pieData = [{
 		value: 435,
 		name: "小于1月",
 	},
@@ -70,7 +70,7 @@ var pie = {
 			label: {
 				show: true,
 				color: "#9BB1C8",
-				formatter: "{d|{d}}{j|%}\n{b|{b}}",
+				formatter: "{d|{d}}{j|%}\n{b|（{b}）}",
 				rich: {
 					d: {
 						fontSize: 34,
@@ -99,9 +99,9 @@ var pie = {
 };
 
 // 柱状图
-let barColors = ['#FDAEE7', '#245FE6'];
-let barData = [100, 90, 10, 90, 90, 20, 56, 89];
-let bar = {
+var barColors = ['#FDAEE7', '#245FE6'];
+var barData = [100, 90, 10, 90, 90, 20, 56, 89];
+var bar = {
 	color: '#245FE6',
 	tooltip: {
 		trigger: 'item',
@@ -158,8 +158,8 @@ let bar = {
 };
 
 // 线形图
-let lineData = [820, 932, 400, 934, 1290, 1330, 1320];
-let line = {
+var lineData = [820, 932, 400, 934, 1290, 1330, 1320];
+var line = {
 	tooltip: {
 		trigger: 'item',
 		position: 'top',
@@ -201,7 +201,7 @@ let line = {
 	}, ],
 	series: [{
 		type: 'line',
-		name:'入库用时',
+		name: '入库用时',
 		data: lineData,
 		smooth: true,
 		symbol: "circle",
@@ -235,15 +235,12 @@ let line = {
 }
 
 // 三个饼状图
-let piesColors = ['#5383FF', '#3FD4F4', '#FFBE5E'];
-
-
+var piesColors = ['#5383FF', '#3FD4F4', '#FFBE5E'];
 var piesData = ["76", "78", "22"];
 
-var seriesData = [];
-var titleData = [];
-piesData.forEach(function(item, index) {
-	seriesData.push({
+// 将数据填充转为方法 方便调用
+function fn(item, index) {
+	return {
 		type: "pie",
 		radius: ["65", "78"],
 		center: [30 * (index + 1) - 10 + "%", "50%"],
@@ -256,23 +253,9 @@ piesData.forEach(function(item, index) {
 		},
 		data: [{
 				value: item,
-				// name: piesData.names[index],
 				itemStyle: {
 					borderRadius: 10,
 					color: piesColors[index],
-				},
-				label: {
-					show: false,
-				},
-			},
-			{
-				value: 100 - item,
-				name: "占位",
-				tooltip: {
-					show: false,
-				},
-				itemStyle: {
-					color: "#edf1f4",
 				},
 				label: {
 					backgroundColor: piesColors[index] + '44',
@@ -296,16 +279,84 @@ piesData.forEach(function(item, index) {
 					},
 				},
 			},
+			{
+				value: 100 - item,
+				name: "占位",
+				tooltip: {
+					show: false,
+				},
+				itemStyle: {
+					color: "#edf1f4",
+				},
+				label: {
+					show: false,
+				},
+			},
 		],
-	});
-});
+	}
+}
+// var seriesData = [];
+// piesData.forEach(function(item, index) {
+// 	seriesData.push({
+// 		type: "pie",
+// 		radius: ["65", "78"],
+// 		center: [30 * (index + 1) - 10 + "%", "50%"],
+// 		label: {
+// 			position: "center",
+// 		},
+// 		emphasis: {
+// 			scale: false,
+// 			disabled: true,
+// 		},
+// 		data: [{
+// 				value: item,
+// 				itemStyle: {
+// 					borderRadius: 10,
+// 					color: piesColors[index],
+// 				},
+// 				label: {
+// 					backgroundColor: piesColors[index] + '44',
+// 					borderRadius: 90,
+// 					width: 90,
+// 					height: 90,
+// 					formatter: "{d|" + item + "}{j|%}",
+// 					rich: {
+// 						d: {
+// 							fontSize: 34,
+// 							lineHeight: 90,
+// 							fontWeight: 'bold',
+// 							color: '#043D75'
+// 						},
+// 						j: {
+// 							fontSize: 16,
+// 							lineHeight: 90,
+// 							fontWeight: 'bold',
+// 							color: '#043D75'
+// 						}
+// 					},
+// 				},
+// 			},
+// 			{
+// 				value: 100 - item,
+// 				name: "占位",
+// 				tooltip: {
+// 					show: false,
+// 				},
+// 				itemStyle: {
+// 					color: "#edf1f4",
+// 				},
+// 				label: {
+// 					show: false,
+// 				},
+// 			},
+// 		],
+// 	});
+// });
 
-// let value = piesData.value || 0;
-let pies = {
-	id: 'pies',
-	// title: titleData,
-	grid:{
-		top:10
-	},
-	series: seriesData,
-};
+// var pies = {
+// 	id: 'pies',
+// 	grid: {
+// 		top: 10
+// 	},
+// 	series: seriesData,
+// };
